@@ -18,8 +18,14 @@ app.use(express.urlencoded());
 var currentSearch; // tracks current search results, used to add favorites
 var userFavorites = []; // tracks current user favorites
 
-// checks if user is logged in; prevents access to pages without login
+/**
+ * Used to check if the user has logged in when accessing certain URLs.
+ */
 var checkLogin = (response) => {
+    /**
+     * @param {Object} response - Express HTTP response object
+     * @return {bool} - bool determining if user is logged in or not
+     */
     if (!auth.isLogged()) {
         response.render('log.hbs', {
             signupMsg: '',
@@ -30,16 +36,28 @@ var checkLogin = (response) => {
         return true;
 }
 
-// landing page, login screen
+/**
+ * Initial landing page, displays login
+ */
 app.get('/', (request, response) => {
+    /**
+     * @param {Object} request - Express HTTP request object
+     * @param {Object} response - Express HTTP response object
+     */
     response.render('log.hbs', {
         signupMsg: '',
         loginMsg: ''
     });
 });
 
-// when user submits a registration
+/**
+ * checks validity of user registration info (all fields filled, available username, matching passwords)
+ */
 app.post('/signup', (request, response) => {
+    /**
+     * @param {Object} request - Express HTTP request object
+     * @param {Object} response - Express HTTP response object
+     */
     var msg = ''
     if (request.body.registerName.length <= 0 || request.body.registerPw.length <= 0)
         msg = '<h2>Username or password missing</h2>'
@@ -57,7 +75,9 @@ app.post('/signup', (request, response) => {
     });
 });
 
-// when user submits a login
+/**
+ * checks
+ */
 app.post('/login', (request, response) => {
     if (auth.checkAvailable(request.body.loginName)) {
         response.render('log.hbs', {
@@ -165,29 +185,26 @@ app.get('/settings', (request, response) => {
 
 // when user submits info change
 app.post('/settings', (request, response) => {
-	if (request.body.oldPw != request.body.confirmOldPw) {
-		response.render('settings.hbs', {
+    if (request.body.oldPw != request.body.confirmOldPw) {
+        response.render('settings.hbs', {
             settingsMsg: '<h2>Old passwords do not match</h2>'
         });
-	}
-	else if (!auth.check(auth.getCurrentName(), request.body.oldPw)) {
-		response.render('settings.hbs', {
+    } else if (!auth.check(auth.getCurrentName(), request.body.oldPw)) {
+        response.render('settings.hbs', {
             settingsMsg: '<h2>Old password is incorrect</h2>'
         });
-	}
-	else if ((request.body.newPw !== '' || request.body.confirmNewPw !== '') && request.body.newPw !== request.body.confirmNewPw) {
-		console.log(request.body.newPw);
-		console.log(request.body.confirmNewPw);
-		response.render('settings.hbs', {
+    } else if ((request.body.newPw !== '' || request.body.confirmNewPw !== '') && request.body.newPw !== request.body.confirmNewPw) {
+        console.log(request.body.newPw);
+        console.log(request.body.confirmNewPw);
+        response.render('settings.hbs', {
             settingsMsg: '<h2>New passwords do not match</h2>'
         });
-	}
-	else {
-		auth.changeInfo(request.body);
-		response.render('settings.hbs', {
+    } else {
+        auth.changeInfo(request.body);
+        response.render('settings.hbs', {
             settingsMsg: '<h2>Your changes have been saved</h2>'
         });
-	}
+    }
 });
 
 // when user ends session
