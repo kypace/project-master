@@ -76,9 +76,13 @@ app.post('/signup', (request, response) => {
 });
 
 /**
- * checks
+ * checks validity of user login info (Username existence, correct password)
  */
 app.post('/login', (request, response) => {
+    /**
+     * @param {Object} request - Express HTTP request object
+     * @param {Object} response - Express HTTP response object
+     */
     if (auth.checkAvailable(request.body.loginName)) {
         response.render('log.hbs', {
             signupMsg: '',
@@ -95,14 +99,26 @@ app.post('/login', (request, response) => {
     }
 });
 
-// intro screen, explains website
+/**
+ * displays home page if user is logged in
+ */
 app.get('/home', (request, response) => {
+    /**
+     * @param {Object} request - Express HTTP request object
+     * @param {Object} response - Express HTTP response object
+     */
     if (checkLogin(response))
         response.render('home.hbs');
 });
 
-// search screen to query TheMovieDB
+/**
+ * displays search page if user is logged in
+ */
 app.get('/search', (request, response) => {
+    /**
+     * @param {Object} request - Express HTTP request object
+     * @param {Object} response - Express HTTP response object
+     */
     if (checkLogin(response)) {
         response.render('search.hbs', {
             parsed: ''
@@ -110,8 +126,12 @@ app.get('/search', (request, response) => {
     }
 });
 
-// when user submits a search query
+// uses themoviedb.js to query API and get search results
 app.post('/search', (request, response) => {
+    /**
+     * @param {Object} request - Express HTTP request object
+     * @param {Object} response - Express HTTP response object
+     */
     themoviedb.search(request.body.searchQuery).then((result) => {
         currentSearch = result;
         response.render('search.hbs', {
@@ -124,8 +144,14 @@ app.post('/search', (request, response) => {
     });
 });
 
-// favorites tab, populated with user selections
+/**
+ * displays the user's favorites if user is logged in
+ */
 app.get('/favorites', (request, response) => {
+    /**
+     * @param {Object} request - Express HTTP request object
+     * @param {Object} response - Express HTTP response object
+     */
     if (checkLogin(response)) {
         response.render('favorites.hbs', {
             favorites: themoviedb.generateFavorites(userFavorites)
