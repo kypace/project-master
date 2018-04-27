@@ -113,9 +113,18 @@ app.get('/favorites', (request, response) => {
     }
 });
 
-// when adding or removing favorite movies
+/**
+ * Modify / Delete Favorites
+ */
 app.post('/favorites', (request, response) => {
+    /**
+    * @param {string} '/favorites' - a route
+    * @param {function(request: Object, response: Object)} - callback for user's requests in /favorites
+    */
     if (request.body.favPush === "yes") {
+        /**
+         * @public {Array} userFavorites - current user's favorites  
+         */
         userFavorites.push(currentSearch[request.body.favIndex]);
         auth.setFavorites(userFavorites);
     } else {
@@ -127,8 +136,14 @@ app.post('/favorites', (request, response) => {
     });
 });
 
-// displays recommendations based on favorites
+/**
+ * displays recommendations based on favorites
+ */
 app.get('/recommendations', (request, response) => {
+    /**
+    * @param {string} '/recommendations' - a route
+    * @param {function(request: Object, response: Object)} - callback for user's requests in /recommendations
+    */    
     if (checkLogin(response)) {
         var recString = "";
         if (userFavorites.length > 0) {
@@ -154,8 +169,14 @@ app.get('/recommendations', (request, response) => {
     }
 });
 
-// settings page to change username or password
+/**
+ * settings page to change username or password
+ */ 
 app.get('/settings', (request, response) => {
+    /**
+    * @param {string} '/settings' - a route
+    * @param {function(request: Object, response: Object)} - callback for user's requests in /settings
+    */    
     if (checkLogin(response)) {
         response.render('settings.hbs', {
             settingsMsg: ''
@@ -163,8 +184,14 @@ app.get('/settings', (request, response) => {
     }
 });
 
-// when user submits info change
+/**
+ *  when user submits info change
+ */ 
 app.post('/settings', (request, response) => {
+    /**
+    * @param {string} '/settings' - a route
+    * @param {function(request: Object, response: Object)} - callback for user's requests in /settings
+    */    
 	if (request.body.oldPw != request.body.confirmOldPw) {
 		response.render('settings.hbs', {
             settingsMsg: '<h2>Old passwords do not match</h2>'
@@ -190,8 +217,14 @@ app.post('/settings', (request, response) => {
 	}
 });
 
-// when user ends session
+/**
+ *  when user ends session
+ */ 
 app.get('/logout', (request, response) => {
+    /**
+    * @param {string} '/logout' - a route
+    * @param {function(request: Object, response: Object)} - callback for user's requests in /logout
+    */    
     auth.logoff();
     response.render('log.hbs', {
         signupMsg: '',
@@ -199,6 +232,9 @@ app.get('/logout', (request, response) => {
     });
 });
 
+/**
+ *  print 'server is up' 
+ */ 
 app.listen(8080, () => {
     console.log('Server is up on the port 8080');
 
