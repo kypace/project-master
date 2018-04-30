@@ -1,19 +1,30 @@
 {
   "name": "final-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "Master repo, always have working copy",
   "main": "app.js",
   "dependencies": {
-    "bcrypt": "^2.0.0",
+    "bcrypt": "^2.0.1",
     "express": "^4.16.3",
     "fs": "0.0.1-security",
     "hbs": "^4.0.1",
     "request": "^2.85.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "esdoc": "^1.0.4",
+    "esdoc-standard-plugin": "^1.0.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ko Iketani",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seungilpark/project-master.git"
+  },
+  "bugs": {
+    "url": "https://github.com/seungilpark/project-master/issues"
+  },
+  "homepage": "https://github.com/seungilpark/project-master#readme"
 }
