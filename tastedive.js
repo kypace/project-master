@@ -2,7 +2,20 @@ const request = require('request');
 
 var key = '302969-StudentP-ITG1R8RP';
 
+
+/**
+ * Query made from favorites sent to tastedive api
+ */
 var getRecommendations = (seed) => {
+    /**
+    * @param {object} seed 
+    * @param {object} resolve
+    * @param {object} reject
+    * @param {string} error
+    * @param {string} response
+    * @param {string} body
+    * @return {object} Promise - returns similar results for recommendations 
+    */
     return new Promise((resolve, reject) => {
         request({
             url: 'https://tastedive.com/api/similar?type=movies&info=1&k=' + key + '&q=' + encodeURIComponent(seed),
@@ -21,6 +34,9 @@ var getRecommendations = (seed) => {
     });
 }
 
+/**
+ * This was only used for testing purposes
+ */
 var readRecommendations = (reclist) => {
     for (var i = 0; i < reclist.length; i++) {
         console.log(`Name: ${reclist[i].Name}`);
@@ -28,7 +44,14 @@ var readRecommendations = (reclist) => {
     }
 }
 
+/**
+ * Displays recommendations with teasers into html 
+ */
 var parseRecommendations = (reclist) => {
+    /**
+    * @param {object} reclist - the recommended list 
+    * @return {object} generated - arrays of movies shown in html with teasers
+    */
 	var generated = "";
 	for (var i = 0; i < reclist.length; i++) {
         var teaser = reclist[i].wTeaser;
