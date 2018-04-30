@@ -2,7 +2,14 @@ const request = require('request');
 
 var key = '4f7f94aba387fbfbfa50c54655774e78';
 
+/**
+ * This function searches the movieDB with the user's query
+ */
 var search = (query) => {
+    /**
+     * @param {string} query - this is the user's search query
+     * @return {object} - returns the results of the search (or error message if no results or an erro)
+     */
     return new Promise((resolve, reject) => {
         request({
             url: 'https://api.themoviedb.org/3/search/movie?api_key=' + key + '&query=' + encodeURIComponent(query),
@@ -21,14 +28,27 @@ var search = (query) => {
     });
 }
 
+/**
+ * This function reads the results of the search to the console log
+ */
 var readResults = (results) => {
+    /**
+     * @param {array} results - this is the list of search results
+     */
     for (var i = 0; i < results.length; i++) {
         console.log(`Title: ${results[i].title}`);
         console.log(`Description: ${results[i].overview}`);
     }
 }
 
+/**
+ * This function creates the on-screen list of movies, artwork and desciptions from the search.
+ */
 var parseResults = (results) => {
+    /**
+     * @param {array} results - this is the list of search results
+     * @return {string} - this is the styling and divs of the search page
+     */
     var parsed = "";
     for (var i = 0; i < results.length; i++) {
         var overview = results[i].overview;
@@ -52,7 +72,14 @@ var parseResults = (results) => {
     return parsed;
 }
 
+/**
+ * This function creates the on-screen list of movies, artwork and desciptions for the favorites page.
+ */
 var generateFavorites = (favorites) => {
+    /**
+     * @param {array} favorites - this is the list of favorites saved by the user
+     * @return {string} - this is the styling and divs of the favorite page, or a message if no favorites have been saved 
+     */
     var generated = "";
     if (favorites.length < 1) {
         return "<h2>No favorites have been saved!</h2>";
