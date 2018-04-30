@@ -164,9 +164,9 @@ app.get('/favorites', (request, response) => {
  */
 app.post('/favorites', (request, response) => {
     /**
-    * @param {string} '/favorites' - a route
-    * @param {function(request: Object, response: Object)} - callback for user's requests in /favorites
-    */
+     * @param {string} '/favorites' - a route
+     * @param {function(request: Object, response: Object)} - callback for user's requests in /favorites
+     */
     if (request.body.favPush === "yes") {
         /**
          * @public {Array} userFavorites - current user's favorites  
@@ -187,9 +187,9 @@ app.post('/favorites', (request, response) => {
  */
 app.get('/recommendations', (request, response) => {
     /**
-    * @param {string} '/recommendations' - a route
-    * @param {function(request: Object, response: Object)} - callback for user's requests in /recommendations
-    */    
+     * @param {string} '/recommendations' - a route
+     * @param {function(request: Object, response: Object)} - callback for user's requests in /recommendations
+     */
     if (checkLogin(response)) {
         var recString = "";
         if (userFavorites.length > 0) {
@@ -217,12 +217,12 @@ app.get('/recommendations', (request, response) => {
 
 /**
  * settings page to change username or password
- */ 
+ */
 app.get('/settings', (request, response) => {
     /**
-    * @param {string} '/settings' - a route
-    * @param {function(request: Object, response: Object)} - callback for user's requests in /settings
-    */    
+     * @param {string} '/settings' - a route
+     * @param {function(request: Object, response: Object)} - callback for user's requests in /settings
+     */
     if (checkLogin(response)) {
         response.render('settings.hbs', {
             settingsMsg: ''
@@ -232,29 +232,30 @@ app.get('/settings', (request, response) => {
 
 /**
  *  when user submits info change
- */ 
+ */
 app.post('/settings', (request, response) => {
     /**
-    * @param {string} '/settings' - a route
-    * @param {function(request: Object, response: Object)} - callback for user's requests in /settings
-    */    
-	if (request.body.oldPw != request.body.confirmOldPw) {
-		response.render('settings.hbs', {
+     * @param {Object} request - Express HTTP request object
+     * @param {Object} response - Express HTTP response object
+     */
     if (request.body.oldPw != request.body.confirmOldPw) {
         response.render('settings.hbs', {
             settingsMsg: '<h2>Old passwords do not match</h2>'
         });
-    } else if (!auth.check(auth.getCurrentName(), request.body.oldPw)) {
+    }
+    else if (!auth.check(auth.getCurrentName(), request.body.oldPw)) {
         response.render('settings.hbs', {
             settingsMsg: '<h2>Old password is incorrect</h2>'
         });
-    } else if ((request.body.newPw !== '' || request.body.confirmNewPw !== '') && request.body.newPw !== request.body.confirmNewPw) {
+    }
+    else if ((request.body.newPw !== '' || request.body.confirmNewPw !== '') && request.body.newPw !== request.body.confirmNewPw) {
         console.log(request.body.newPw);
         console.log(request.body.confirmNewPw);
         response.render('settings.hbs', {
             settingsMsg: '<h2>New passwords do not match</h2>'
         });
-    } else {
+    }
+    else {
         auth.changeInfo(request.body);
         response.render('settings.hbs', {
             settingsMsg: '<h2>Your changes have been saved</h2>'
@@ -264,12 +265,12 @@ app.post('/settings', (request, response) => {
 
 /**
  *  when user ends session
- */ 
+ */
 app.get('/logout', (request, response) => {
     /**
-    * @param {string} '/logout' - a route
-    * @param {function(request: Object, response: Object)} - callback for user's requests in /logout
-    */    
+     * @param {string} '/logout' - a route
+     * @param {function(request: Object, response: Object)} - callback for user's requests in /logout
+     */
     auth.logoff();
     response.render('log.hbs', {
         signupMsg: '',
@@ -279,8 +280,7 @@ app.get('/logout', (request, response) => {
 
 /**
  *  print 'server is up' 
- */ 
+ */
 app.listen(8080, () => {
     console.log('Server is up on the port 8080');
-
 });
