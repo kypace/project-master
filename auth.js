@@ -13,6 +13,9 @@ var currentName = ''; // current user's username
  * loads users from file
  */
 var load = () => {
+    /**
+     * @return {object} users - this is the user loaded from the file
+     */
     var readUser = fs.readFileSync(filename);
     users = JSON.parse(readUser);
 }
