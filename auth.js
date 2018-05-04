@@ -8,14 +8,27 @@ const filename = 'auth.json'; // holds all user data
 var users; // users loaded from file
 var currentName = ''; // current user's username
 
-// loads users from file
+
+/**
+ * loads users from file
+ */
 var load = () => {
+    /**
+     * @return {object} users - this is the user loaded from the file
+     */
     var readUser = fs.readFileSync(filename);
     users = JSON.parse(readUser);
 }
 
-// checks if a username is already taken
+
+/**
+ * check if the username entered is available.
+ */
 var checkAvailable = (registerName) => {
+    /**
+     * @param {string} registerName - this is the username entered by user. 
+     * @return {bool} result of username availability check.
+     */
     load();
     var available = true;
     for (var i = 0; i < users.length; i++) {
@@ -25,13 +38,29 @@ var checkAvailable = (registerName) => {
     return available;
 }
 
-// checks if two passwords are the same
+
+/**
+ * check if confirm password entry matches exactly as password entry.
+ */
 var checkSamePass = (registerPw, confirmPw) => {
+    /**
+     * @param {string} registerPW - this is the first password entered by user.
+     * @param {string} confirmPW - this is the password re-entered by user for confirmation.
+     * @return {bool} result of password confirmation.
+     */    
     return registerPw === confirmPw;
 }
 
-// hashes the password and stores both username and password into file
+
+/**
+ * hashes password and store both username and password into json file.
+ */
 var store = (registerName, registerPw) => {
+    /**
+     * @param {string} registerName - this is the username entered by user.
+     * @param {string} registerPW - this is the password.
+     * @return {function} the function that writes username and password into a json file.
+     */ 
     load();
     var hash = bcrypt.hashSync(registerPw, saltRounds);
     var user = {
@@ -43,8 +72,16 @@ var store = (registerName, registerPw) => {
     fs.writeFileSync(filename, JSON.stringify(users));
 }
 
-// compares passwords with the hashed version stored to determine if login is authentic
+
+/**
+ * compares passwords with stored encryted version to check if login is authentic
+ */
 var check = (loginName, loginPw) => {
+    /**
+     * @param {string} LoginName - this is the username.
+     * @param {string} LoginPW - this is the password encrypted and stored into a json file.
+     * @return {bool} result of the authentication check.
+     */ 
     load();
     var isCorrect = false
     for (var i = 0; i < users.length; i++) {
@@ -59,16 +96,29 @@ var check = (loginName, loginPw) => {
     return isCorrect;
 }
 
-// returns the current user's favorites
+
+/**
+ * this returns a current list of user's favorites
+ */
 var getFavorites = () => {
+    /**
+     * @return {object} the current user's favorite list
+     */
     for (var i = 0; i < users.length; i++) {
         if (currentName === users[i].username)
             return users[i].favorites;
     }
 }
 
-// sets the current user's favorites
+
+/**
+ * select and set the current user's favorites
+ */
 var setFavorites = (favorites) => {
+    /**
+     * @param {string} favorites - this is the favorite movie that users would like to add.
+     * @return {function} the function that writes(adds) the favorites to user json file.
+     */
     for (var i = 0; i < users.length; i++) {
         if (currentName === users[i].username)
             users[i].favorites = favorites;
@@ -76,21 +126,37 @@ var setFavorites = (favorites) => {
     fs.writeFileSync(filename, JSON.stringify(users));
 }
 
-// determines if a user is logged in or not
+
+/**
+ * check if a user is logged in
+ */
 var isLogged = () => {
+    /**
+     * @return {bool} the result of user log check.
+     */
     if (currentName === '')
         return false;
     else
         return true;
 }
 
-// removes current user name for logout
+
+/**
+ * log off user and remove current user name (currentName)
+ */
 var logoff = () => {
     currentName = '';
 }
 
-// changes user information
+
+/**
+ * changes user information including username and password
+ */
 var changeInfo = (changes) => {
+    /**
+     * @param {string} changes - this is the change that users make on their user info.
+     * @return {function} the function updates information stored in the user json file.
+     */
     var user;
     for (var i = 0; i < users.length; i++) {
         if (currentName === users[i].username) {
@@ -107,11 +173,21 @@ var changeInfo = (changes) => {
     fs.writeFileSync(filename, JSON.stringify(users));
 }
 
-// returns current user's username
+
+/**
+ * returns current user's username
+ */
 var getCurrentName = () => {
+    /**
+     * @return {string} currentName - this is the current user's username.
+     */
     return currentName;
 }
 
+
+/**
+ * exports functions
+ */
 module.exports = {
     load,
     checkAvailable,
