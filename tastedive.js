@@ -59,7 +59,7 @@ var parseRecommendations = (reclist) => {
             teaser = teaser.substring(0, 600) + "..";
         generated += `
         <div style='background-color:#FFFCF8; width:100%; height:20%; text-align:left; border-top:1px solid black;'>
-            <iframe src='${reclist[i].yUrl}' style='left=1vw; margin:5px; vertical-align: top; height:85%; display: inline; float: left'></iframe> 
+            <iframe src='${reclist[i].yUrl}' allowFullScreen style='left=1vw; margin:5px; vertical-align: top; height:85%; display: inline; float: left'></iframe> 
             <div style='width:100%; height:10%; vertical-align: top; display: inline'>
                 <strong>Title</strong>: ${reclist[i].Name}<br>
                 <strong>Overview</strong>: ${teaser}<br>
