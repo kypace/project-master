@@ -12,12 +12,17 @@
   },
   "devDependencies": {
 
-    "babel-jest": "^22.4.3",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "esdoc": "^1.0.4",
+    "esdoc-standard-plugin": "^1.0.0",
     "jest": "^22.4.3",
-    "supertest": "^3.0.0",
+    "superagent": "^3.8.3",
+    "supertest": "^3.0.0"
 
     "esdoc": "^1.0.4",
     "esdoc-standard-plugin": "^1.0.0"
+
   },
   "scripts": {
     "test": "jest"

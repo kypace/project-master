@@ -9,6 +9,8 @@ const auth = require('./auth')
 var app = express();
 
 hbs.registerPartials(__dirname + '/views/partials');
+hbs.registerPartial('style', '/views/partials/style')
+hbs.registerPartial('navigation', '/views/partials/navigation')
 
 app.set('view engine', 'hbs');
 app.use(express.static(__dirname + '/public'));
@@ -59,15 +61,20 @@ app.post('/signup', (request, response) => {
      * @param {Object} response - Express HTTP response object
      */
     var msg = ''
-    if (request.body.registerName.length <= 0 || request.body.registerPw.length <= 0)
+    try {
+        if (request.body.registerName.length <= 0 || request.body.registerPw.length <= 0)
+            msg = '<h2>Username or password missing</h2>'
+        else if (!auth.checkAvailable(request.body.registerName))
+            msg = '<h2>Username unavailable</h2>';
+        else if (!auth.checkSamePass(request.body.registerPw, request.body.confirmPw))
+            msg = '<h2>Passwords do not match</h2>'
+        else {
+            msg = '<h2>Registered Successfully!</h2>'
+            auth.store(request.body.registerName, request.body.registerPw);
+        }
+    }
+    catch(err) {
         msg = '<h2>Username or password missing</h2>'
-    else if (!auth.checkAvailable(request.body.registerName))
-        msg = '<h2>Username unavailable</h2>';
-    else if (!auth.checkSamePass(request.body.registerPw, request.body.confirmPw))
-        msg = '<h2>Passwords do not match</h2>'
-    else {
-        msg = '<h2>Registered Successfully!</h2>'
-        auth.store(request.body.registerName, request.body.registerPw);
     }
     response.render('log.hbs', {
         signupMsg: msg,
@@ -178,7 +185,6 @@ app.post('/favorites', (request, response) => {
         auth.setFavorites(userFavorites);
     }
     response.render('favorites.hbs', {
-
         favorites: themoviedb.generateFavorites(userFavorites)
     });
 });
@@ -279,12 +285,5 @@ app.get('/logout', (request, response) => {
     });
 });
 
-/**
- *  print 'server is up' 
- */
- 
-app.listen(8080, () => {
-    console.log('Server is up on the port 8080');
-});
-
 module.exports = app;
+
