@@ -108,7 +108,7 @@ app.get('/home', (request, response) => {
      * @param {Object} response - Express HTTP response object
      */
     if (checkLogin(response))
-        response.render('home.hbs');
+        response.render('search.hbs');
 });
 
 /**
