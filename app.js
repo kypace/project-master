@@ -178,6 +178,7 @@ app.post('/favorites', (request, response) => {
         auth.setFavorites(userFavorites);
     }
     response.render('favorites.hbs', {
+
         favorites: themoviedb.generateFavorites(userFavorites)
     });
 });
@@ -281,6 +282,9 @@ app.get('/logout', (request, response) => {
 /**
  *  print 'server is up' 
  */
+ 
 app.listen(8080, () => {
     console.log('Server is up on the port 8080');
 });
+
+module.exports = app;
