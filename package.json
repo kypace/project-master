@@ -1,7 +1,7 @@
 {
   "name": "final-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "Master repo, always have working copy",
   "main": "app.js",
   "dependencies": {
     "bcrypt": "^2.0.1",
@@ -11,13 +11,26 @@
     "request": "^2.85.0"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "babel-jest": "^22.4.3",
     "jest": "^22.4.3",
     "supertest": "^3.0.0"
+=======
+    "esdoc": "^1.0.4",
+    "esdoc-standard-plugin": "^1.0.0"
+>>>>>>> upstream/master
   },
   "scripts": {
     "test": "jest"
   },
   "author": "Ko Iketani",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seungilpark/project-master.git"
+  },
+  "bugs": {
+    "url": "https://github.com/seungilpark/project-master/issues"
+  },
+  "homepage": "https://github.com/seungilpark/project-master#readme"
 }
