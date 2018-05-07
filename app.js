@@ -274,7 +274,6 @@ app.get('/logout', (request, response) => {
     auth.logoff();
     response.render('log.hbs', {
         signupMsg: '',
-        loginMsg: '<h2>You have been successfully logged out!</h2>'
     });
 });
 
