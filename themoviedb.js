@@ -162,6 +162,7 @@ var generateFavorites = (favorites) => {
      * @param {array} favorites - this is the list of favorites saved by the user
      * @return {string} - this is the styling and divs of the favorite page, or a message if no favorites have been saved 
      */
+
     var generated = "";
     if (favorites.length < 1) {
         return "<h2>No favorites have been saved!</h2>";
