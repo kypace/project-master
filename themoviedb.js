@@ -138,23 +138,22 @@ var generateFavorites = (favorites) => {
      * @param {array} favorites - this is the list of favorites saved by the user
      * @return {string} - this is the styling and divs of the favorite page, or a message if no favorites have been saved 
      */
-    var uniqueFavorites = [...new Set(favorites.map(v => JSON.stringify(v)))].map(v => JSON.parse(v));
 
     var generated = "";
-    if (uniqueFavorites.length < 1) {
+    if (favorites.length < 1) {
         return "<h2>No favorites have been saved!</h2>";
     }
-    for(var i = 0; i < uniqueFavorites.length; i++) {
-        var overview = uniqueFavorites[i].overview;
+    for(var i = 0; i < favorites.length; i++) {
+        var overview = favorites[i].overview;
         if (overview.length > 600)
             overview = overview.substring(0, 600) + "..";
         generated += `
         <div style='background-color:#FFFCF8; width:100%; height:20%; text-align:left; border-top:1px solid black; '>
-            <img src='http://image.tmdb.org/t/p/w92/${uniqueFavorites[i].poster_path}' style='left=1vw; margin:5px; height:90%; vertical-align: top; display: inline; float: left'/>
+            <img src='http://image.tmdb.org/t/p/w92/${favorites[i].poster_path}' style='left=1vw; margin:5px; height:90%; vertical-align: top; display: inline; float: left'/>
             <div style='width:100%; height:10%; vertical-align: top; display: inline'>
-                <strong>Title</strong>: ${uniqueFavorites[i].title}<br>
+                <strong>Title</strong>: ${favorites[i].title}<br>
                 <strong>Overview</strong>: ${overview}<br>
-                <strong>Release Date</strong>: ${uniqueFavorites[i].release_date}<br>
+                <strong>Release Date</strong>: ${favorites[i].release_date}<br>
                 <form action="/favorites" enctype="application/json" method="post">
                     <input id= "favIndex" name="favIndex" type="hidden" value=${i} />
                     <input id= "favPush" name="favPush" type="hidden" value="no" />
