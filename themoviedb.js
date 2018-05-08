@@ -3,12 +3,12 @@ const request = require('request');
 var key = '4f7f94aba387fbfbfa50c54655774e78';
 
 /**
- * This function searches the movieDB with the user's query
+ * This function searches the movieDB for movies with the user's query
  */
 var search = (query) => {
     /**
      * @param {string} query - this is the user's search query
-     * @return {object} - returns the results of the search (or error message if no results or an erro)
+     * @return {object} - returns the results of the movie search (or error message if no results or an erro)
      */
     return new Promise((resolve, reject) => {
         request({
@@ -19,8 +19,6 @@ var search = (query) => {
                 reject('Cannot connect to TheMovieDB');
             } else if (body.total_results < 1) {
                 reject('No results found for query');
-            } else if (body.errors[0] == 'query must be provided') {
-                reject('Query is empty');
             } else {
                 resolve(
                     body.results
@@ -30,7 +28,15 @@ var search = (query) => {
     });
 }
 
+
+/**
+ * This function searches the movieDB for celebrities with user's query
+ */
 var peopleSearch = (query) => {
+    /**
+     * @param {string} query - this is the user's search query
+     * @return {object} - returns the results of the people search (or an error message if no results)
+     */
     return new Promise((resolve, reject) => {
         request({
             url: 'https://api.themoviedb.org/3/search/person?api_key=' + key + '&query=' + encodeURIComponent(query),
@@ -49,7 +55,15 @@ var peopleSearch = (query) => {
     });
 }
 
+
+/**
+ * This function searches the movieDB for actors/actrsses with user input (person's name)
+ */
 var actorCreditSearch = (personid) => {
+    /*
+     * @param {string} personid - this is the user's search query
+     * @return {object} - returns the results of the actor/actress search from movieDB (or an error message if no results)
+     */
     return new Promise((resolve, reject) => {
         request({
             url: 'https://api.themoviedb.org/3/person/' + personid + '/movie_credits?api_key=' + key + '&query=' + encodeURIComponent(query),
@@ -68,7 +82,15 @@ var actorCreditSearch = (personid) => {
     });
 }
 
+
+/*
+ * This function searches the movieDB for directors with user input (person's name)
+ */
 var directorCreditSearch = (personid) => {
+    /*
+     * @param {string} personid - this is the user's search query
+     * @return {object} - returns the results of the director search from movieDB (or an error message if no results)
+     */
     return new Promise((resolve, reject) => {
         request({
             url: 'https://api.themoviedb.org/3/person/' + personid + '/movie_credits?api_key=' + key + '&query=' + encodeURIComponent(query),
@@ -166,7 +188,14 @@ var generateFavorites = (favorites) => {
     return generated;
 }
 
+/**
+ * This function creates the on-screen list of celebrities
+ */
 var generatePeople = (results) => {
+    /**
+     * @param {array} results - this is the list of celebrities searched by user
+     * @return {string} - this is the styling and divs of the search page
+     */
     var parsed = "";
     for (var i = 0; i < results.length; i++) {
         parsed += `
@@ -180,7 +209,14 @@ var generatePeople = (results) => {
     return parsed;
 }
 
+/**
+ * This function sorts the release date of the movies in descending order
+ */
 var sortReleaseDescending = (results) => {
+    /**
+     * @param {array} results - this is the list of results searched by user
+     * @return {string} - this is the sorted list of the results.
+     */
     var max = results.length;
     var sorted = [];
     var bigindex = 0;
@@ -195,7 +231,14 @@ var sortReleaseDescending = (results) => {
     return sorted;
 }
 
+/**
+ * This function sorts the release date of the movies in ascending order
+ */
 var sortReleaseAscending = (results) => {
+    /**
+     * @param {array} results - this is the list of results searched by user
+     * @return {string} - this is the sorted list of the results.
+     */
     var max = results.length;
     var sorted = [];
     var bigindex = 0;
