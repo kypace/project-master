@@ -19,6 +19,8 @@ var search = (query) => {
                 reject('Cannot connect to TheMovieDB');
             } else if (body.total_results < 1) {
                 reject('No results found for query');
+            } else if (body.errors[0] == 'query must be provided') {
+                reject('Query is empty');
             } else {
                 resolve(
                     body.results
