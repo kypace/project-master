@@ -1,12 +1,27 @@
 {
-  "name": "final-project",
+  "name": "project-master",
   "version": "1.0.0",
   "description": "Master repo, always have working copy",
   "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koiketani/project-master.git"
+  },
+  "author": "Jeremy Park, Kevin Yoo, Shane Reimer, Juston Chuang, Ko Iketani",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/koiketani/project-master/issues"
+  },
+  "homepage": "https://github.com/koiketani/project-master#readme",
   "dependencies": {
     "bcrypt": "^2.0.1",
+    "esdoc": "^1.1.0",
+    "esdoc-standard-plugin": "^1.0.0",
     "express": "^4.16.3",
-    "fs": "0.0.1-security",
     "hbs": "^4.0.1",
     "request": "^2.85.0"
   },
