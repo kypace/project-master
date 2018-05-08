@@ -145,9 +145,21 @@ app.post('/search', (request, response) => {
             parsed: themoviedb.parseResults(result)
         });
     }).catch((error) => {
-        response.render('search.hbs', {
-            parsed: "<h2>" + error + "</h2>"
-        });
+        if (error == 'No results found for query') {
+            response.render('search.hbs', {
+                parsed: "<h2>No results found for query</h2>"
+            });
+        }
+        else if (error == 'Query is empty') {
+            response.render('search.hbs', {
+                parsed: "<h2>Query is empty</h2>"
+            });
+        }
+        else {
+            response.render('search.hbs', {
+                parsed: "<h2>" + error + "</h2>"
+            });
+        }
     });
 });
 
