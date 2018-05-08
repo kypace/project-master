@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -26,20 +26,10 @@
     "request": "^2.85.0"
   },
   "devDependencies": {
-    "esdoc": "^1.0.4",
-    "esdoc-standard-plugin": "^1.0.0"
-  },
-  "scripts": {
-    "test": "jest"
-  },
-  "author": "Ko Iketani",
-  "license": "ISC",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/seungilpark/project-master.git"
-  },
-  "bugs": {
-    "url": "https://github.com/seungilpark/project-master/issues"
-  },
-  "homepage": "https://github.com/seungilpark/project-master#readme"
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "jest": "^22.4.3",
+    "superagent": "^3.8.3",
+    "supertest": "^3.0.0"
+  }
 }
