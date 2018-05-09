@@ -18,6 +18,8 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 var currentSearch; // tracks current search results, used to add favorites
+var searchChoice; // tracks current search option
+var sortChoice; // tracks current sort option for actor and director search
 var userFavorites = []; // tracks current user favorites
 
 /**
@@ -72,8 +74,7 @@ app.post('/signup', (request, response) => {
             msg = '<h2>Registered Successfully!</h2>'
             auth.store(request.body.registerName, request.body.registerPw);
         }
-    }
-    catch(err) {
+    } catch (err) {
         msg = '<h2>Username or password missing</h2>'
     }
     response.render('log.hbs', {
@@ -139,28 +140,123 @@ app.post('/search', (request, response) => {
      * @param {Object} request - Express HTTP request object
      * @param {Object} response - Express HTTP response object
      */
-    themoviedb.search(request.body.searchQuery).then((result) => {
-        currentSearch = result;
-        response.render('search.hbs', {
-            parsed: themoviedb.parseResults(result)
+
+    if (typeof request.body.personID != 'undefined') {
+        themoviedb.creditSearch(request.body.personID).then((result) => {
+            if (searchChoice == 'Actors') {
+                if (sortChoice == 'Dates') {
+                    response.render('search.hbs', {
+                        parsed: themoviedb.parseResults(themoviedb.sortReleaseDescending(result.cast))
+                    });
+                } else if (sortChoice == 'Titles') {
+                    response.render('search.hbs', {
+                        parsed: themoviedb.parseResults(themoviedb.sortTitleDescending(result.cast))
+                    });
+                } else {
+                    response.render('search.hbs', {
+                        parsed: themoviedb.parseResults(result.cast)
+                    });
+                }
+            } else {
+                var i = result.crew.length
+                while (i--) {
+                    if (result.crew[i].job != 'Director')
+                        result.crew.splice(i, 1);
+                }
+                if (result.crew.length < 1) {
+                    response.render('search.hbs', {
+                        parsed: "<h2>No movies with directing credit found!</h2>"
+                    });
+                } else {
+                    if (sortChoice == 'Dates') {
+                        response.render('search.hbs', {
+                            parsed: themoviedb.parseResults(themoviedb.sortReleaseDescending(result.crew))
+                        });
+                    } else if (sortChoice == 'Titles') {
+                        response.render('search.hbs', {
+                            parsed: themoviedb.parseResults(themoviedb.sortTitleDescending(result.crew))
+                        });
+                    } else {
+                        response.render('search.hbs', {
+                            parsed: themoviedb.parseResults(result.crew)
+                        });
+                    }
+                }
+            }
+            currentSearch = result;
+
+        }).catch((error) => {
+            if (error == 'No results found for query') {
+                response.render('search.hbs', {
+                    parsed: "<h2>No results found for query</h2>"
+                });
+            } else if (error == 'Query is empty') {
+                response.render('search.hbs', {
+                    parsed: "<h2>Query is empty</h2>"
+                });
+            } else {
+                response.render('search.hbs', {
+                    parsed: "<h2>" + error + "</h2>"
+                });
+            }
         });
-    }).catch((error) => {
-        if (error == 'No results found for query') {
-            response.render('search.hbs', {
-                parsed: "<h2>No results found for query</h2>"
+    } else {
+        searchChoice = request.body.searchChoice;
+        sortChoice = request.body.sortChoice;
+        if (request.body.searchChoice == 'Titles') {
+            themoviedb.search(request.body.searchQuery).then((result) => {
+                currentSearch = result;
+                if (sortChoice == 'Dates') {
+                    response.render('search.hbs', {
+                        parsed: themoviedb.parseResults(themoviedb.sortReleaseDescending(result))
+                    });
+                } else if (sortChoice == 'Titles') {
+                    response.render('search.hbs', {
+                        parsed: themoviedb.parseResults(themoviedb.sortTitleDescending(result))
+                    });
+                } else {
+                    response.render('search.hbs', {
+                        parsed: themoviedb.parseResults(result)
+                    });
+                }
+            }).catch((error) => {
+                if (error == 'No results found for query') {
+                    response.render('search.hbs', {
+                        parsed: "<h2>No results found for query</h2>"
+                    });
+                } else if (error == 'Query is empty') {
+                    response.render('search.hbs', {
+                        parsed: "<h2>Query is empty</h2>"
+                    });
+                } else {
+                    response.render('search.hbs', {
+                        parsed: "<h2>" + error + "</h2>"
+                    });
+                }
+            });
+        } else {
+            themoviedb.peopleSearch(request.body.searchQuery).then((result) => {
+                currentSearch = result;
+                response.render('search.hbs', {
+                    parsed: themoviedb.generatePeople(result)
+                });
+            }).catch((error) => {
+                if (error == 'No results found for query') {
+                    response.render('search.hbs', {
+                        parsed: "<h2>No results found for query</h2>"
+                    });
+                } else if (error == 'Query is empty') {
+                    response.render('search.hbs', {
+                        parsed: "<h2>Query is empty</h2>"
+                    });
+                } else {
+                    response.render('search.hbs', {
+                        parsed: "<h2>" + error + "</h2>"
+                    });
+                }
             });
         }
-        else if (error == 'Query is empty') {
-            response.render('search.hbs', {
-                parsed: "<h2>Query is empty</h2>"
-            });
-        }
-        else {
-            response.render('search.hbs', {
-                parsed: "<h2>" + error + "</h2>"
-            });
-        }
-    });
+    }
 });
 
 /**
@@ -261,20 +357,17 @@ app.post('/settings', (request, response) => {
         response.render('settings.hbs', {
             settingsMsg: '<h2>Old passwords do not match</h2>'
         });
-    }
-    else if (!auth.check(auth.getCurrentName(), request.body.oldPw)) {
+    } else if (!auth.check(auth.getCurrentName(), request.body.oldPw)) {
         response.render('settings.hbs', {
             settingsMsg: '<h2>Old password is incorrect</h2>'
         });
-    }
-    else if ((request.body.newPw !== '' || request.body.confirmNewPw !== '') && request.body.newPw !== request.body.confirmNewPw) {
+    } else if ((request.body.newPw !== '' || request.body.confirmNewPw !== '') && request.body.newPw !== request.body.confirmNewPw) {
         console.log(request.body.newPw);
         console.log(request.body.confirmNewPw);
         response.render('settings.hbs', {
             settingsMsg: '<h2>New passwords do not match</h2>'
         });
-    }
-    else {
+    } else {
         auth.changeInfo(request.body);
         response.render('settings.hbs', {
             settingsMsg: '<h2>Your changes have been saved</h2>'
@@ -298,4 +391,3 @@ app.get('/logout', (request, response) => {
 });
 
 module.exports = app;
-
