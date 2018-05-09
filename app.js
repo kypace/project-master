@@ -40,6 +40,9 @@ var checkLogin = (response) => {
         return true;
 }
 
+
+
+
 /**
  * Initial landing page, displays login
  */
@@ -268,6 +271,7 @@ app.get('/favorites', (request, response) => {
      * @param {Object} response - Express HTTP response object
      */
     if (checkLogin(response)) {
+        userFavorites = [...new Set(userFavorites.map(v => JSON.stringify(v)))].map(v => JSON.parse(v));
         response.render('favorites.hbs', {
             favorites: themoviedb.generateFavorites(userFavorites)
         });
@@ -287,9 +291,11 @@ app.post('/favorites', (request, response) => {
          * @public {Array} userFavorites - current user's favorites  
          */
         userFavorites.push(currentSearch[request.body.favIndex]);
+        userFavorites = [...new Set(userFavorites.map(v => JSON.stringify(v)))].map(v => JSON.parse(v));
         auth.setFavorites(userFavorites);
     } else {
         userFavorites.splice(request.body.favIndex, 1);
+        userFavorites = [...new Set(userFavorites.map(v => JSON.stringify(v)))].map(v => JSON.parse(v));
         auth.setFavorites(userFavorites);
     }
     response.render('favorites.hbs', {
