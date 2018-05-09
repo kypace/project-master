@@ -19,6 +19,8 @@ var search = (query) => {
                 reject('Cannot connect to TheMovieDB');
             } else if (body.total_results < 1) {
                 reject('No results found for query');
+            } else if (typeof body.errors != 'undefined') {
+                reject('Query is empty');
             } else {
                 resolve(
                     body.results
@@ -46,6 +48,8 @@ var peopleSearch = (query) => {
                 reject('Cannot connect to TheMovieDB');
             } else if (body.total_results < 1) {
                 reject('No results found for query');
+            } else if (typeof body.errors != 'undefined') {
+                reject('Query is empty');
             } else {
                 resolve(
                     body.results
@@ -56,53 +60,19 @@ var peopleSearch = (query) => {
 }
 
 
-/**
- * This function searches the movieDB for actors/actrsses with user input (person's name)
- */
-var actorCreditSearch = (personid) => {
-    /*
-     * @param {string} personid - this is the user's search query
-     * @return {object} - returns the results of the actor/actress search from movieDB (or an error message if no results)
-     */
+var creditSearch = (personid) => {
     return new Promise((resolve, reject) => {
         request({
-            url: 'https://api.themoviedb.org/3/person/' + personid + '/movie_credits?api_key=' + key + '&query=' + encodeURIComponent(query),
+            url: 'https://api.themoviedb.org/3/person/' + personid + '/movie_credits?api_key=' + key,
             json: true
         }, (error, response, body) => {
             if (error) {
                 reject('Cannot connect to TheMovieDB');
-            } else if (body.cast.length < 1) {
+            } else if (body.cast.length < 1 && body.crew.length < 1) {
                 reject('No results found for query');
             } else {
                 resolve(
-                    body.cast
-                );
-            }
-        });
-    });
-}
-
-
-/*
- * This function searches the movieDB for directors with user input (person's name)
- */
-var directorCreditSearch = (personid) => {
-    /*
-     * @param {string} personid - this is the user's search query
-     * @return {object} - returns the results of the director search from movieDB (or an error message if no results)
-     */
-    return new Promise((resolve, reject) => {
-        request({
-            url: 'https://api.themoviedb.org/3/person/' + personid + '/movie_credits?api_key=' + key + '&query=' + encodeURIComponent(query),
-            json: true
-        }, (error, response, body) => {
-            if (error) {
-                reject('Cannot connect to TheMovieDB');
-            } else if (body.crew.length < 1) {
-                reject('No results found for query');
-            } else {
-                resolve(
-                    body.crew
+                    body
                 );
             }
         });
@@ -204,6 +174,10 @@ var generatePeople = (results) => {
             <img src='http://image.tmdb.org/t/p/w92/${results[i].profile_path}' style='left=1vw; margin:5px; height:90%; vertical-align: top; display: inline; float: left'/>
             <div style='width:100%; height:10%; vertical-align: top; display: inline'>
                 <strong>Name</strong>: ${results[i].name}<br>
+                <form action="/search" enctype="application/json" method="post">
+                    <input id="personID" name="personID" type="hidden" value=${results[i].id} />
+                    <input id="personSubmit" action="/search" type="submit" value="Find Movies" />
+                </form>
             </div>
         </div>`;
     }
@@ -220,10 +194,10 @@ var sortReleaseDescending = (results) => {
      */
     var max = results.length;
     var sorted = [];
-    var bigindex = 0;
     for (var i = 0; i < max; i++) {
+        var bigindex = 0;
         for (var j = 0; j < results.length; j++) {
-            if (results[j] > results[bigindex])
+            if (results[j].release_date > results[bigindex].release_date)
                 bigindex = j;
         }
         sorted.push(results[bigindex])
@@ -242,10 +216,26 @@ var sortReleaseAscending = (results) => {
      */
     var max = results.length;
     var sorted = [];
-    var bigindex = 0;
     for (var i = 0; i < max; i++) {
+        var bigindex = 0;
         for (var j = 0; j < results.length; j++) {
-            if (results[j] < results[bigindex])
+            if (results[j].release_date < results[bigindex].release_date)
+                bigindex = j;
+        }
+        sorted.push(results[bigindex])
+        results.splice(bigindex, 1)
+    }
+    return sorted;
+}
+
+var sortTitleDescending = (results) => {
+    var max = results.length;
+    var sorted = [];
+
+    for (var i = 0; i < max; i++) {
+        var bigindex = 0;
+        for (var j = 0; j < results.length; j++) {
+            if (results[j].title < results[bigindex].title)
                 bigindex = j;
         }
         sorted.push(results[bigindex])
@@ -257,13 +247,13 @@ var sortReleaseAscending = (results) => {
 module.exports = {
     search,
     peopleSearch,
-    actorCreditSearch,
-    directorCreditSearch,
+    creditSearch,
     readResults,
     parseResults,
     generateFavorites,
     generatePeople,
     sortReleaseDescending,
-    sortReleaseAscending
+    sortReleaseAscending,
+    sortTitleDescending
 };
 
