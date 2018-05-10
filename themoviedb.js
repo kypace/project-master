@@ -31,6 +31,7 @@ var search = (query) => {
 }
 
 
+
 /**
  * This function searches the movieDB for celebrities with user's query
  */
@@ -68,6 +69,12 @@ var creditSearch = (personid) => {
         }, (error, response, body) => {
             if (error) {
                 reject('Cannot connect to TheMovieDB');
+
+            } else if (body.crew.length < 1) {
+                reject('No results found for query');
+            } else {
+                resolve(
+                    body.crew
             } else if (body.cast.length < 1 && body.crew.length < 1) {
                 reject('No results found for query');
             } else {
@@ -104,19 +111,19 @@ var parseResults = (results) => {
     var parsed = "";
     for (var i = 0; i < results.length; i++) {
         var overview = results[i].overview;
-        if (overview.length > 600)
-            overview = overview.substring(0, 600) + "..";
+        if (overview.length > 250)
+            overview = overview.substring(0, 250) + "..";
         parsed += `
-        <div style='background-color:#FFFCF8; width:100%; height:20%; text-align:left; border-top:1px solid black; '>
-            <img src='http://image.tmdb.org/t/p/w92/${results[i].poster_path}' style='left=1vw; margin:5px; height:90%; vertical-align: top; display: inline; float: left'/>
-            <div style='width:100%; height:10%; vertical-align: top; display: inline'>
+        <div class='border border-light p-3 mb-3 col-3 bg-dark'>
+            <img src='http://image.tmdb.org/t/p/w92/${results[i].poster_path}' class='mPoster'/>
+            <div class='p-3 mb-2 mTextBox text-light text-left content'>
                 <strong>Title</strong>: ${results[i].title}<br>
                 <strong>Overview</strong>: ${overview}<br>
                 <strong>Release Date</strong>: ${results[i].release_date}<br>
                 <form action="/favorites" enctype="application/json" method="post">
                     <input id= "favIndex" name="favIndex" type="hidden" value=${i} />
                     <input id= "favPush" name="favPush" type="hidden" value="yes" />
-                    <input id="Favorite" action="/favorites" type="submit" value="Favorite" />
+                    <input class="fButton btn btn-secondary" id="Favorite" action="/favorites" type="submit" value="Favorite" />
                 </form>
             </div>
         </div>`;
@@ -139,25 +146,26 @@ var generateFavorites = (favorites) => {
     }
     for(var i = 0; i < favorites.length; i++) {
         var overview = favorites[i].overview;
-        if (overview.length > 600)
-            overview = overview.substring(0, 600) + "..";
+        if (overview.length > 250)
+            overview = overview.substring(0, 250) + "..";
         generated += `
-        <div style='background-color:#FFFCF8; width:100%; height:20%; text-align:left; border-top:1px solid black; '>
-            <img src='http://image.tmdb.org/t/p/w92/${favorites[i].poster_path}' style='left=1vw; margin:5px; height:90%; vertical-align: top; display: inline; float: left'/>
-            <div style='width:100%; height:10%; vertical-align: top; display: inline'>
+        <div class='border border-light p-3 mb-3 col-3 bg-dark'>
+            <img src='http://image.tmdb.org/t/p/w92/${favorites[i].poster_path}' class='mPoster'/>
+            <div class='p-3 mb-2 mTextBox text-light text-left content'>
                 <strong>Title</strong>: ${favorites[i].title}<br>
                 <strong>Overview</strong>: ${overview}<br>
                 <strong>Release Date</strong>: ${favorites[i].release_date}<br>
                 <form action="/favorites" enctype="application/json" method="post">
                     <input id= "favIndex" name="favIndex" type="hidden" value=${i} />
                     <input id= "favPush" name="favPush" type="hidden" value="no" />
-                    <input id="Unfavorite" action="/favorites" type="submit" value="Unfavorite" />
+                    <input class="fButton btn btn-secondary" id="Unfavorite" action="/favorites" type="submit" value="Unfavorite" />
                 </form>
             </div>
         </div>`;
     }
     return generated;
 }
+
 
 /**
  * This function creates the on-screen list of celebrities
@@ -184,6 +192,7 @@ var generatePeople = (results) => {
     return parsed;
 }
 
+
 /**
  * This function sorts the release date of the movies in descending order
  */
@@ -205,6 +214,7 @@ var sortReleaseDescending = (results) => {
     }
     return sorted;
 }
+
 
 /**
  * This function sorts the release date of the movies in ascending order
@@ -228,7 +238,15 @@ var sortReleaseAscending = (results) => {
     return sorted;
 }
 
+
+/**
+ * This function sorts the movie title in descending order
+ */
 var sortTitleDescending = (results) => {
+    /**
+     * @param {array} results - this is the list of results searched by user
+     * @return {string} - this is the sorted list of the results.
+     */
     var max = results.length;
     var sorted = [];
 
