@@ -2,39 +2,44 @@
 <html>
 
 <head>
-    <title>Search</title>
+    <title>MyMovieList - Search</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     {{> style}}
 </head>
 
 <body>
-    {{> navigation}}
-    <div class="contentDiv" id="searchPage">
-        <h1>Search TheMovieDB</h1>
-        <form id="search-form" enctype="application/json" action="/search" method="post">
-            <input class="searchForm" id="advancedSearchButton" type="button" value="Menu">
-            <input class="searchForm" id="searchQuery" name="searchQuery" type="text" placeholder="Enter Movie Title" value="" />
-        	<input class="searchForm" id="searchButton" type="submit" value="Search" />
+    <div id="bannerAndNav" class="container-fluid">
+        <div id="banner" class="row">Search TheMovieDB</div>
+        <div id="navigationDiv" class="row navbar bg-dark">{{> navigation}}</div>
+        <form class="pb-3 bg-dark container-fluid" id="search-form" enctype="application/json" action="/search" method="post">
+            <div class="col-2"></div>
+            <input class="col-1 searchForm btn btn-secondary text-light" id="advancedSearchButton" type="button" value="Menu">
+            <input class="col-6 searchForm" id="searchQuery" name="searchQuery" type="text" placeholder="Enter Movie Title" value="" />
+            <input class="col-1 searchForm btn btn-secondary text-light" id="searchButton" type="submit" value="Search" />
+            <div class="col-2"></div>
         </form>
-        <div class="results" id="searchResults">
-        	{{{parsed}}}
-        </div>
-        <div id="searchControls" class="jumbotron container bg-dark"> 
+        <div id="searchControls" class="p-3 container bg-dark"> 
             <div class="row">
-                <div class="bg-light col">Search By</div>
-                <button type="button" class="btn btn-secondary col" id="searchByTitles">Titles</button>
-                <button type="button" class="btn btn-secondary col" id="searchByDirectors">Directors</button>
-                <button type="button" class="btn btn-secondary col" id="searchByActors">Actors</button>
+                <div class="bg-light col-3">Search By</div>
+                <button type="button" class=" btn btn-primary col-3" id="searchByTitles">Titles</button>
+                <button type="button" class=" btn btn-secondary col-3" id="searchByDirectors">Directors</button>
+                <button type="button" class=" btn btn-secondary col-3" id="searchByActors">Actors</button>
             </div>
             <br />
             <div class="row">
-                <div class="bg-light col">Sort By</div>
-                <button type="button" class="btn btn-secondary col" id="sortByTitles">Titles</button>
-                <button type="button" class="btn btn-secondary col" id="sortByRatings">Ratings</button>
-                <button type="button" class="btn btn-secondary col" id="sortByDates">Dates</button>
+                <div class="bg-light p-2 col-3">Sort By</div>
+                <button type="button" class="p-2 btn btn-primary col-3" id="sortByTitles">Titles</button>
+                <button type="button" class="p-2 btn btn-secondary col-3" id="sortByRatings">Ratings</button>
+                <button type="button" class="btn btn-secondary col-3" id="sortByDates">Dates</button>
             </div>
         </div>
     </div>
+
+    </div>
+    <div id="searchResults" class="container-fluid">
+       <div class="row">{{{parsed}}}</div>
+    </div>
+        
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -51,33 +56,33 @@
 
         function selectSearchMethod(el){
             if (el == searchByTitles) {
-                el.className = "btn btn-primary col";
-                searchByDirectors.className = "btn btn-secondary col";
-                searchByActors.className = "btn btn-secondary col";
+                el.className = "btn btn-primary col-3";
+                searchByDirectors.className = "btn btn-secondary col-3";
+                searchByActors.className = "btn btn-secondary col-3";
             } else if (el == searchByDirectors) {
-                el.className = "btn btn-primary col";
-                searchByActors.className = "btn btn-secondary col";
-                searchByTitles.className = "btn btn-secondary col";
+                el.className = "btn btn-primary col-3";
+                searchByActors.className = "btn btn-secondary col-3";
+                searchByTitles.className = "btn btn-secondary col-3";
             } else if (el == searchByActors) {
-                el.className = "btn btn-primary col";
-                searchByDirectors.className = "btn btn-secondary col";
-                searchByTitles.className = "btn btn-secondary col";
+                el.className = "btn btn-primary col-3";
+                searchByDirectors.className = "btn btn-secondary col-3";
+                searchByTitles.className = "btn btn-secondary col-3";
             }
         }
 
         function selectSortingMethod(el){
             if (el == sortByDates) {
-                el.className = "btn btn-primary col";
-                sortByRatings.className = "btn btn-secondary col";
-                sortByTitles.className = "btn btn-secondary col";
+                el.className = "btn btn-primary col-3";
+                sortByRatings.className = "btn btn-secondary col-3";
+                sortByTitles.className = "btn btn-secondary col-3";
             } else if (el == sortByRatings) {
-                el.className = "btn btn-primary col";
-                sortByDates.className = "btn btn-secondary col";
-                sortByTitles.className = "btn btn-secondary col";
+                el.className = "btn btn-primary col-3";
+                sortByDates.className = "btn btn-secondary col-3";
+                sortByTitles.className = "btn btn-secondary col-3";
             } else if (el == sortByTitles) {
-                el.className = "btn btn-primary col";
-                sortByDates.className = "btn btn-secondary col";
-                sortByRatings.className = "btn btn-secondary col";
+                el.className = "btn btn-primary col-3";
+                sortByDates.className = "btn btn-secondary col-3";
+                sortByRatings.className = "btn btn-secondary col-3";
             }
         }
 
@@ -105,16 +110,20 @@
             selectSortingMethod(this);
         });
 
+        var searchControlDiv = document.getElementById("searchControls");
+
         document.getElementById("advancedSearchButton").addEventListener("click", function(){
             //menu open/close
             if (!checked) {
-                document.getElementById("searchControls").style.display = "block";
+                searchControlDiv.style.display = "block";
                 checked = 1;
             } else {
-                document.getElementById("searchControls").style.display = "none";
+                searchControlDiv.style.display = "none";
                 checked = 0;
             }     
         })
+
+
 
     </script>
 </body>
