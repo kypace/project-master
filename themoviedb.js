@@ -176,13 +176,18 @@ var generatePeople = (results) => {
      * @return {string} - this is the styling and divs of the search page
      */
     var parsed = "";
+
     for (var i = 0; i < results.length; i++) {
         parsed += `
         <div style='background-color:#FFFCF8; width:100%; height:20%; text-align:left; border-top:1px solid black; '>
             <img src='http://image.tmdb.org/t/p/w92/${results[i].profile_path}' style='left=1vw; margin:5px; height:90%; vertical-align: top; display: inline; float: left'/>
             <div style='width:100%; height:10%; vertical-align: top; display: inline'>
                 <strong>Name</strong>: ${results[i].name}<br>
-                <form action="/search" enctype="application/json" method="post">
+                <strong>Known For</strong> :`
+        for (var j = 0; j < results[i].known_for.length; j++) {
+            parsed += `<img src='http://image.tmdb.org/t/p/w92/${results[i].known_for[j].poster_path}' style='margin:5px; height:50%; vertical-align: top; display: inline;'/>`
+        }
+        parsed += `<form action="/search" enctype="application/json" method="post">
                     <input id="personID" name="personID" type="hidden" value=${results[i].id} />
                     <input id="personSubmit" action="/search" type="submit" value="Find Movies" />
                 </form>
