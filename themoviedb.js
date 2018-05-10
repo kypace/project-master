@@ -249,6 +249,22 @@ var sortTitleDescending = (results) => {
     return sorted;
 }
 
+var sortTitleAscending = (results) => {
+    var max = results.length;
+    var sorted = [];
+
+    for (var i = 0; i < max; i++) {
+        var bigindex = 0;
+        for (var j = 0; j < results.length; j++) {
+            if (results[j].title > results[bigindex].title)
+                bigindex = j;
+        }
+        sorted.push(results[bigindex])
+        results.splice(bigindex, 1)
+    }
+    return sorted;
+}
+
 module.exports = {
     search,
     peopleSearch,
@@ -259,6 +275,7 @@ module.exports = {
     generatePeople,
     sortReleaseDescending,
     sortReleaseAscending,
-    sortTitleDescending
+    sortTitleDescending,
+    sortTitleAscending
 };
 
