@@ -12,14 +12,11 @@
     <div class="contentDiv" id="searchPage">
         <h1>Search TheMovieDB</h1>
         <form id="search-form" enctype="application/json" action="/search" method="post">
-            <input class="searchForm" id="advancedSearchButton" type="button" value="Menu">
+            <input class="searchForm" id="advancedSearchButton" type="button" value="Menu" />
             <input class="searchForm" id="searchQuery" name="searchQuery" type="text" placeholder="Enter Movie Title" value="" />
         	<input class="searchForm" id="searchButton" type="submit" value="Search" />
-        </form>
-        <div class="results" id="searchResults">
-        	{{{parsed}}}
-        </div>
-        <div id="searchControls" class="jumbotron container bg-dark"> 
+
+        	<div id="searchControls" class="jumbotron container bg-dark"> 
             <div class="row">
                 <div class="bg-light col">Search By</div>
                 <button type="button" class="btn btn-primary col" id="searchByTitles">Titles</button>
@@ -29,10 +26,22 @@
             <br />
             <div class="row">
                 <div class="bg-light col">Sort By</div>
+
                 <button type="button" class="btn btn-primary col" id="sortByTitles">Titles</button>
                 <button type="button" class="btn btn-secondary col" id="sortByRatings">Ratings</button>
+
+                <button type="button" class="btn btn-primary col" id="sortByRelevance">Relevance</button>
+                <button type="button" class="btn btn-secondary col" id="sortByTitles">Titles</button>
+
                 <button type="button" class="btn btn-secondary col" id="sortByDates">Dates</button>
             </div>
+
+            <input id="searchChoice" name="searchChoice" type="text" style='display:none' value="Titles" />
+            <input id="sortChoice" name="sortChoice" type="text" style='display:none' value="Relevance" />
+        </div>
+        </form>
+        <div class="results" id="searchResults">
+        	{{{parsed}}}
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -46,7 +55,7 @@
         var searchByActors = document.getElementById("searchByActors");
 
         var sortByTitles = document.getElementById("sortByTitles"),
-            sortByRatings = document.getElementById("sortByRatings"),
+            sortByRelevance = document.getElementById("sortByRelevance"),
             sortByDates = document.getElementById("sortByDates");
 
         function selectSearchMethod(el){
@@ -54,30 +63,39 @@
                 el.className = "btn btn-primary col";
                 searchByDirectors.className = "btn btn-secondary col";
                 searchByActors.className = "btn btn-secondary col";
+                document.getElementById('searchChoice').value = 'Titles';
+                document.getElementById('searchQuery').placeholder = 'Enter Movie Title';
             } else if (el == searchByDirectors) {
                 el.className = "btn btn-primary col";
                 searchByActors.className = "btn btn-secondary col";
                 searchByTitles.className = "btn btn-secondary col";
+                document.getElementById('searchChoice').value = 'Directors';
+                document.getElementById('searchQuery').placeholder = 'Enter Director Name';
             } else if (el == searchByActors) {
                 el.className = "btn btn-primary col";
                 searchByDirectors.className = "btn btn-secondary col";
                 searchByTitles.className = "btn btn-secondary col";
+                document.getElementById('searchChoice').value = 'Actors';
+                document.getElementById('searchQuery').placeholder = 'Enter Actor Name';
             }
         }
 
         function selectSortingMethod(el){
             if (el == sortByDates) {
                 el.className = "btn btn-primary col";
-                sortByRatings.className = "btn btn-secondary col";
+                sortByRelevance.className = "btn btn-secondary col";
                 sortByTitles.className = "btn btn-secondary col";
-            } else if (el == sortByRatings) {
+                document.getElementById('sortChoice').value = 'Dates';
+            } else if (el == sortByRelevance) {
                 el.className = "btn btn-primary col";
                 sortByDates.className = "btn btn-secondary col";
                 sortByTitles.className = "btn btn-secondary col";
+                document.getElementById('sortChoice').value = 'Relevance';
             } else if (el == sortByTitles) {
                 el.className = "btn btn-primary col";
                 sortByDates.className = "btn btn-secondary col";
-                sortByRatings.className = "btn btn-secondary col";
+                sortByRelevance.className = "btn btn-secondary col";
+                document.getElementById('sortChoice').value = 'Titles';
             }
         }
 
@@ -97,7 +115,7 @@
             selectSortingMethod(this);
         });
 
-        sortByRatings.addEventListener("click", function(){
+        sortByRelevance.addEventListener("click", function(){
             selectSortingMethod(this);
         });
 
