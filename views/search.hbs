@@ -35,7 +35,7 @@
         </div>
     </div>
 
-    </div>
+
     <div id="searchResults" class="container-fluid">
        <div class="row">{{{parsed}}}</div>
     </div>
@@ -51,7 +51,7 @@
         var searchByActors = document.getElementById("searchByActors");
 
         var sortByTitles = document.getElementById("sortByTitles"),
-            sortByRatings = document.getElementById("sortByRatings"),
+            sortByRelevance = document.getElementById("sortByRelevance"),
             sortByDates = document.getElementById("sortByDates");
 
         function selectSearchMethod(el){
@@ -102,7 +102,7 @@
             selectSortingMethod(this);
         });
 
-        sortByRatings.addEventListener("click", function(){
+        sortByRelevance.addEventListener("click", function(){
             selectSortingMethod(this);
         });
 

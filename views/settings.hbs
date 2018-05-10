@@ -2,29 +2,64 @@
 <html>
 
 <head>
-    <title>Settings</title>
+    <title>MyMovieList - Settings</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     {{> style}}
 </head>
 
 <body>
-    {{> navigation}}
-    <div class="contentDiv" id="setPage">
-        <h1>Settings</h1>
-        <div class="setClass" id="changeInfoDiv">
-        	<h2>Enter a new username and/or a new password. Your old password is required to change either.</h2><br>
-        	<div id="formDiv">
-	            <form id="changeinfo-form" enctype="application/json" action="/settings" method="post">
-	            	<input class="changeInfoForm" id="newUsername" name="newUsername" type="text" placeholder="New Username" value="" /><br><br>
-	            	<input class="changeInfoForm" id="newPw" name="newPw" type="password" placeholder="New Password" value="" />
-	                <input class="changeInfoForm" id="confirmNewPw" name="confirmNewPw" type="password" placeholder="New Password (Confirm)" value="" /><br><br>
-	                <input class="changeInfoForm" id="oldPw" name="oldPw" type="password" placeholder="Old Password" value="" />
-	                <input class="changeInfoForm" id="confirmOldPw" name="confirmOldPw" type="password" placeholder="Old Password (Confirm)" value="" /><br><br>
-	                <input class="changeInfoForm" id="submit_button" type="submit" value="Submit" />
-	                {{{settingsMsg}}}
-	            </form>
+	<div id="bannerAndNav" class="container-fluid">
+        <div id="banner" class="row bg-dark text-white "><div id="banner-text">Settings</div></div>
+        <div id="navigationDiv" class="row navbar bg-dark">{{> navigation}}</div>
+    </div>
+
+    <div class="contentDiv bg-dark" id="setPage">
+			<form class="container pt-4 pb-4 mt-5 bg-dark" id="changeinfo-form" enctype="application/json" action="/settings" method="post">
+				<div class="form-row">
+					<div class="form-group col-md-2"></div>
+					<div class="form-group col-md-4">
+						<label class="text-light" for="newUsername">New Username</label>
+						<input class="changeInfoForm form-control" id="newUsername" name="newUsername" type="text" placeholder="New Username" value="" />
+					</div>	
+					
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-2"></div>
+					<div class="form-group col-md-4">
+						<label class="text-light"for="newPw">New Password</label>
+						<input class="changeInfoForm form-control" id="newPw" name="newPw" type="password" placeholder="New Password" value="" />
+					</div>
+					<div class="form-group col-md-4">
+						<label class="text-light"for="confirmNewPw">Confirm New Password</label>
+						<input class="changeInfoForm form-control" id="confirmNewPw" name="confirmNewPw" type="password" placeholder="New Password (Confirm)" value="" />	
+					</div>	
+					<div class="form-group col-md-2"></div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-2"></div>
+					<div class="form-group col-md-4">
+						<label class="text-light"for="oldPw">Old Password</label>
+						<input class="changeInfoForm form-control" id="oldPw" name="oldPw" type="password" placeholder="Old Password" value="" />
+					</div>
+					<div class="form-group col-md-4">
+						<label class="text-light"for="confirmOldPw">Confirm Old Password</label>
+						<input class="changeInfoForm form-control" id="confirmOldPw" name="confirmOldPw" type="password" placeholder="Old Password (Confirm)" value="" />
+					</div>
+					<div class="form-group col-md-2"></div>
+				</div>
+				<br/>
+				<div class="form-row">
+					<div class="form-group col-md-3"></div>
+					<input class="col-md-6 changeInfoForm btn btn-secondary" id="submit_button" type="submit" value="Submit" />
+				</div>	
+				{{{settingsMsg}}}
+			</form>
 	        </div>
         </div>
     </div>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
 </html>

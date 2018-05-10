@@ -1,98 +1,96 @@
 <!--Color Scheme : http://paletton.com/palette.php?uid=70N2t0kllll0PYyb4vAvBb5Yg0P-->
 
 <style>
-	@font-face {
-	    font-family: BrandonBold;
-	    src: url('Brandon_bld.otf');
-	}
-	@font-face {
-	    font-family: BrandonMedium;
-	    src: url('Brandon_med.otf');
-	}
-	@font-face {
-    font-family: BrandonMediumItalic;
-    src: url('Brandon_med_it.otf');
-	}
 
 	body {
 	    margin: 0;
-	    font-family: BrandonMedium;
+	    font-family: monospace;
 	    background-color:#FFFCF8;
 	    color:#070400;
-	    font-size:1.75vw;
+	    font-size:1vw;
 	    overflow: hidden;
 	}
 
-	h1 {
-		font-size: 5vw;
-		text-align: center;
-		background-color: #FCD9A5;
-		margin-top:2vh;
-		margin-bottom: 1vh;
-	}
-
-	.textonimage {
-		position:fixed;
-		text-align:center;
-		color:black;
-		top:150px;
-		left:0;
-		right:0;
-		font-size:120px;
-		border-bottom:10px solid black;
-	}
-
 	h2 {
-		font-size: 1.5vw;
-		margin-top:1.5vh;
-		margin-bottom: 1vh;
-		color:black;
+		color: white;
+		font-size: 2vw;
+	}
+	#bannerAndNav {
+		position: fixed;
+		top:0;
+		left:0;
+		width:100vw;
+		height:30vh;
+		margin:0;
+		padding: 0;
+		text-align: center;
+	}
+
+
+	#banner {
+		margin:0;
+		padding:1%;
+		height:15vh;
+		position: sticky;
+		text-align: center;
+		display:block;
+		font-family: monospace;
+		font-size: 5vh;
+		color: white;
+
+		background-image: url(http://www.studiomalibu.com/EQUIPMENT_files/lit-stage-abstract-wallpaper-1920x1200-2979-filtered.jpg);
+		background-size: cover;
+		background-position:bottom;
+	}
+
+
+	#navigationMenu {
+	    width: 100vw;
+		padding-top: 2vh;
+		padding-bottom: 2vh;
+	}
+
+	#instructions {
+		padding:5%;
+		text-align: center;
+		vertical-align: middle;
+		font-size: 1.2em;
+		display:block;
 	}
 
 	.navButton {
-	    height: 10vh;
-	    width: 100%;
-	    font-size: 2vw;
-	    font-family: BrandonBold;
+		width:100%;
+	    {{!-- font-family: sans-serif;
 	    background-color:#236863;
-	    color:#F1F7F7;
+	    color:#F1F7F7; --}}
 	}
 
+	#searchResults {
+	    width: 100vw;
+		height:72vh;
+		position: relative;
+		top:29vh;
+		left:0;
+	    padding: 1vh;
+	    margin: 0;
+		overflow: auto;
+		background-image: url(http://getwallpapers.com/wallpaper/full/a/d/2/374134.jpg);
+		background-position: center;
+		background-size: cover;
+		
+	}
 	.contentDiv {
-	    right: 0;
-	    width: 75vw;
-	    height: 100vh;
-	    padding: 0;
-	    margin: 0;
-	    overflow: auto;
-	    border-style: none;
-	    position: absolute;
-	    text-align: center;
-	}
-
-	#navigationMenu {
-	    left: 0vw;
-	    width: 25vw;
-	    background-color: #2B4B6F;
-	    height: 100vh;
-	    padding: 0;
-	    margin: 0;
-	    overflow: auto;
-	    border-style: none;
-	    position: absolute;
-	}
-
-	.searchForm {
-		font-family: BrandonBold;
-	    font-size:1vw;
-	}
-
-	.results {
-	    width: auto;
-	    height: 100%;
-	    background-color: #EEEEEE;
-	    margin-top: 15px;
-	    font-size:0.9vw;
+	    width: 100vw;
+		height:76vh;
+		position: relative;
+		top:24vh;
+		left:0;
+	    padding: 1vh;
+	    margin: auto;
+		overflow: auto;
+		background-image: url(http://getwallpapers.com/wallpaper/full/a/d/2/374134.jpg);
+		background-position: center;
+		background-size: cover;
 	}
 
 	.userAuth {
@@ -105,26 +103,9 @@
 	.userAuthForm {
 	    vertical-align: top;
 	    width: 100%;
-	    font-family: BrandonBold;
 	    font-size:1vw;
 	}
 
-	#changeInfoDiv {
-	    text-align: center;
-	}
-
-	#formDiv {
-	    top: 40vh;
-	    width: 30vw;
-	    height: auto;
-	    margin: auto;
-	}
-
-	.changeInfoForm {
-	    width: 100%;
-	    font-family: BrandonBold;
-	    font-size:1vw;
-	}
 
 	.icon {
 		text-align:center;
@@ -132,31 +113,71 @@
     	margin-left: auto;
     	margin-right: auto;
 	}
+
 	#logIcon {
-		width: 100%;
-		height:100%;
+		width: 100vw;
+		height:100vh;
+		z-index: -1;
 	}
 	#homeIcon {
 		height:40%;
 		margin-top:2vh;
 		margin-bottom:1.5vh;
 	}
-	#navIcon {
-		max-width:65%;
-		max-height:65%;
-		margin-top:3vh;
-		margin-bottom:3vh;
-	}
 
 	#searchControls {
 		width:25vw;
+		display: none;
 		position: absolute;
-		top:23vh;
-		left:25vh;
-		display:none;
+		top:5vh;
+		left:0;
+		background-color: black;
+		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	}
+
+	.mPoster {
+		width:40%;
+		height:40%;
+		float: left;
+		margin-top:5%;
+		margin-right: 5%;
+		box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.6);
+	}
+
+	.mDiv {
+		display: inline-block;
+		height: 666px;
+		margin-bottom: 2%;
+		background-color: #888888;
+		box-shadow: 10px 10px 20px 5px rgba(0, 0, 0, 0.8), -10px 14px 20px 0 rgba(0, 0, 0, 0.7);
+	}
+
+	.recDiv {
+		display: inline-block;
+		height: 777px;
+		margin-bottom: 2%;
+		background-color: #888888;
+		box-shadow: 10px 10px 20px 5px rgba(0, 0, 0, 0.8), -10px 14px 20px 0 rgba(0, 0, 0, 0.7);
 	}
 
 
+	.mTrailer {
+		left:0;
+		height:100%;
+		width:60%;
+		margin:5px;
+		vertical-align: top;
+		float: left;
+	}
+	.fButton {
+		position: absolute;
+		bottom:0;
+		right:5px;
+	}
+	
+	#changeinfo-form {
+		box-shadow: 3% 4% 8% 3% rgba(255, 255, 255, 0.6), 4% 7% 15% 4% rgba(255, 255, 255, 0.6);
+	}
 
 
 </style>
