@@ -119,7 +119,7 @@ app.get('/home', (request, response) => {
      * @param {Object} response - Express HTTP response object
      */
     if (checkLogin(response))
-        response.render('home.hbs');
+        response.render('search.hbs');
 });
 
 /**
@@ -392,7 +392,6 @@ app.get('/logout', (request, response) => {
     auth.logoff();
     response.render('log.hbs', {
         signupMsg: '',
-        loginMsg: '<h2>You have been successfully logged out!</h2>'
     });
 });
 

@@ -60,6 +60,9 @@ var peopleSearch = (query) => {
 }
 
 
+/**
+ * This function searches the movieDB for actors/actrsses with user input (person's name)
+ */
 var creditSearch = (personid) => {
     return new Promise((resolve, reject) => {
         request({
@@ -94,7 +97,7 @@ var readResults = (results) => {
 }
 
 /**
- * This function creates the on-screen list of movies, artwork and desciptions from the search.
+ * This function creates the on-screen list of movies, artwork and desciptions from the search
  */
 var parseResults = (results) => {
     /**
@@ -125,19 +128,18 @@ var parseResults = (results) => {
 }
 
 /**
- * This function creates the on-screen list of movies, artwork and desciptions for the favorites page.
+ * This function creates the on-screen list of movies, artwork and desciptions for the favorites page
  */
 var generateFavorites = (favorites) => {
     /**
      * @param {array} favorites - this is the list of favorites saved by the user
      * @return {string} - this is the styling and divs of the favorite page, or a message if no favorites have been saved 
      */
-
     var generated = "";
     if (favorites.length < 1) {
         return "<h2>No favorites have been saved!</h2>";
     }
-    for(var i = 0; i < favorites.length; i++) {
+    for (var i = 0; i < favorites.length; i++) {
         var overview = favorites[i].overview;
         if (overview.length > 600)
             overview = overview.substring(0, 600) + "..";
@@ -168,19 +170,25 @@ var generatePeople = (results) => {
      * @return {string} - this is the styling and divs of the search page
      */
     var parsed = "";
+
     for (var i = 0; i < results.length; i++) {
         parsed += `
         <div style='background-color:#FFFCF8; width:100%; height:20%; text-align:left; border-top:1px solid black; '>
             <img src='http://image.tmdb.org/t/p/w92/${results[i].profile_path}' style='left=1vw; margin:5px; height:90%; vertical-align: top; display: inline; float: left'/>
             <div style='width:100%; height:10%; vertical-align: top; display: inline'>
                 <strong>Name</strong>: ${results[i].name}<br>
-                <form action="/search" enctype="application/json" method="post">
-                    <input id="personID" name="personID" type="hidden" value=${results[i].id} />
-                    <input id="personSubmit" action="/search" type="submit" value="Find Movies" />
+                <strong>Known For</strong> :`
+        for (var j = 0; j < results[i].known_for.length; j++) {
+            parsed += `<img src='http://image.tmdb.org/t/p/w92/${results[i].known_for[j].poster_path}' style='margin:5px; height:50%; vertical-align: top; display: inline;'/>`
+        }
+        parsed += `<form action="/search" enctype="application/json" method="post">
+                     <input id="personID" name="personID" type="hidden" value=${results[i].id} />
+                     <input id="personSubmit" action="/search" type="submit" value="Find Movies" />
                 </form>
             </div>
         </div>`;
     }
+
     return parsed;
 }
 
@@ -244,16 +252,35 @@ var sortTitleDescending = (results) => {
     return sorted;
 }
 
+
+var sortTitleAscending = (results) => {
+    var max = results.length;
+    var sorted = [];
+
+    for (var i = 0; i < max; i++) {
+        var bigindex = 0;
+        for (var j = 0; j < results.length; j++) {
+            if (results[j].title > results[bigindex].title)
+                bigindex = j;
+        }
+        sorted.push(results[bigindex])
+        results.splice(bigindex, 1)
+    }
+    return sorted;
+}
+
+
 module.exports = {
     search,
     peopleSearch,
     creditSearch,
+    readResults,
     readResults,
     parseResults,
     generateFavorites,
     generatePeople,
     sortReleaseDescending,
     sortReleaseAscending,
-    sortTitleDescending
+    sortTitleDescending,
+    sortTitleAscending
 };
-

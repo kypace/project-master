@@ -4,7 +4,7 @@
   "description": "Master repo, always have working copy",
   "main": "app.js",
   "scripts": {
-    "test": "jest",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "repository": {
@@ -31,8 +31,5 @@
     "jest": "^22.4.3",
     "superagent": "^3.8.3",
     "supertest": "^3.0.0"
-  },
-  "jest": {
-    "collectCoverage": true
   }
 }
