@@ -1,6 +1,15 @@
 const request = require('supertest');
 const app = require('./app');
+//const auth = require('./auth');
 var mdb = require("./themoviedb");
+/*
+describe('Testing auth.js...', () =>{
+	test('Load user file', (done)=>{
+		expect(auth.load).toBeDefined()
+
+	})
+});
+*/
 
 describe('Testing app.js...', () => {
 	test('GET login page', () => {
@@ -67,7 +76,9 @@ describe('Testing app.js...', () => {
 
 
 
-describe("themoviedb.js testing", ()=>{
+
+
+describe("Testing themoviedb.js...", ()=>{
 
 	//Search Testing
 	test("search 'In the Loop' pt1 (correct results returned)", (done)=>{
