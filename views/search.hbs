@@ -9,13 +9,16 @@
 
 <body>
     <div id="bannerAndNav" class="container-fluid">
-        <div id="banner" class="row">Search TheMovieDB</div>
         <div id="navigationDiv" class="row navbar bg-dark">{{> navigation}}</div>
-        <form class="pb-3 bg-dark container-fluid" id="search-form" enctype="application/json" action="/search" method="post">
+        <div id="banner" class="row">Search TheMovieDB</div>
+        
+    </div>
+    <div id="searchBarDiv" class="container-fluid">
+        <form class="bg-dark container-fluid text-center" id="search-form" enctype="application/json" action="/search" method="post">
             <div class="col-2"></div>
-            <input class="col-1 searchForm btn btn-secondary text-light" id="advancedSearchButton" type="button" value="Menu">
+            <input class="col-1 searchForm btn btn-sm btn-secondary text-light" id="advancedSearchButton" type="button" value="Menu">
             <input class="col-6 searchForm" id="searchQuery" name="searchQuery" type="text" placeholder="Enter Movie Title" value="" />
-            <input class="col-1 searchForm btn btn-secondary text-light" id="searchButton" type="submit" value="Search" />
+            <input class="col-1 searchForm btn btn-sm btn-secondary text-light" id="searchButton" type="submit" value="Search" />
             <div class="col-2"></div>
         </form>
         <div id="searchControls" class="p-3 container bg-dark"> 
@@ -34,7 +37,6 @@
             </div>
         </div>
     </div>
-
 
     <div id="searchResults" class="container-fluid">
        <div class="row">{{{parsed}}}</div>
