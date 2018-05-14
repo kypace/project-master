@@ -125,7 +125,7 @@ describe("Testing themoviedb.js...", ()=>{
 	})
 })
 
-describe.only("Testing themoviedb.js advanced search functions...", () => {
+describe("Testing themoviedb.js advanced search functions...", () => {
 	//sortReleaseDescending Testing
 
 	var dsorted = [{release_date: "2018-01-01"}, {release_date: "2017-12-01"}, {release_date: "2016-01-01"}, {release_date: "2015-08-29"}];
