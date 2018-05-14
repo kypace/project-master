@@ -73,7 +73,8 @@ var creditSearch = (personid) => {
                 reject('Cannot connect to TheMovieDB');
             } else if (body.cast.length < 1 && body.crew.length < 1) {
                 reject('No results found for query');
-            } else {
+            }
+            else {
                 resolve(
                     body
                 );
