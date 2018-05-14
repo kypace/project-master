@@ -123,6 +123,86 @@ describe("Testing themoviedb.js...", ()=>{
 		})
 		done();
 	})
+})
 
+describe.only("Testing themoviedb.js advanced search functions...", () => {
+	//sortReleaseDescending Testing
 
+	var dsorted = [{release_date: "2018-01-01"}, {release_date: "2017-12-01"}, {release_date: "2016-01-01"}, {release_date: "2015-08-29"}];
+
+	test("Test sortReleaseDescending with empty results", (done) => {
+		var unsorted = [];
+		expect(mdb.sortReleaseDescending(unsorted)).toEqual([]);
+		done();
+	})
+	test("Test sortReleaseDescending with results already in descending order", (done) => {
+		var unsorted = [{release_date: "2018-01-01"}, {release_date: "2017-12-01"}, {release_date: "2016-01-01"}, {release_date: "2015-08-29"}];
+		expect(mdb.sortReleaseDescending(unsorted)).toEqual(dsorted);
+		done();
+	})
+	test("Test sortReleaseDescending with results out of order", (done) => {
+		var unsorted = [{release_date: "2016-01-01"}, {release_date: "2018-01-01"}, {release_date: "2015-08-29"}, {release_date: "2017-12-01"}];
+		expect(mdb.sortReleaseDescending(unsorted)).toEqual(dsorted);
+		done();
+	})
+
+	//sortReleaseAscending Testing
+
+	var asorted = [{release_date: "2015-01-01"}, {release_date: "2016-12-01"}, {release_date: "2017-01-01"}, {release_date: "2018-08-29"}];
+
+	test("Test sortReleaseAscending with empty results", (done) => {
+		var unsorted = [];
+		expect(mdb.sortReleaseAscending(unsorted)).toEqual([]);
+		done();
+	})
+	test("Test sortReleaseAscending with results already in ascending order", (done) => {
+		var unsorted = [{release_date: "2015-01-01"}, {release_date: "2016-12-01"}, {release_date: "2017-01-01"}, {release_date: "2018-08-29"}];
+		expect(mdb.sortReleaseAscending(unsorted)).toEqual(asorted);
+		done();
+	})
+	test("Test sortReleaseAscending with results out of order", (done) => {
+		var unsorted = [{release_date: "2016-12-01"}, {release_date: "2018-08-29"}, {release_date: "2015-01-01"}, {release_date: "2017-01-01"}];
+		expect(mdb.sortReleaseAscending(unsorted)).toEqual(asorted);
+		done();
+	})
+
+	//sortTitleDescending Testing
+
+	var dtsorted = [{title: "Arthur"}, {title: "Benjamin"}, {title: "Drew"}, {title: "Zack"}];
+
+	test("Test sortTitleDescending with empty results", (done) => {
+		var unsorted = [];
+		expect(mdb.sortTitleDescending(unsorted)).toEqual([]);
+		done();
+	})
+	test("Test sortTitleDescending with results already in descending order", (done) => {
+		var unsorted = [{title: "Arthur"}, {title: "Benjamin"}, {title: "Drew"}, {title: "Zack"}];
+		expect(mdb.sortTitleDescending(unsorted)).toEqual(dtsorted);
+		done();
+	})
+	test("Test sortTitleDescending with results out of order", (done) => {
+		var unsorted = [{title: "Zack"}, {title: "Benjamin"}, {title: "Arthur"}, {title: "Drew"}];
+		expect(mdb.sortTitleDescending(unsorted)).toEqual(dtsorted);
+		done();
+	})
+
+	//sortTitleAscending Testing
+
+	var atsorted = [{title: "Zack"}, {title: "Drew"}, {title: "Benjamin"}, {title: "Arthur"}];
+
+	test("Test sortTitleAscending with empty results", (done) => {
+		var unsorted = [];
+		expect(mdb.sortTitleAscending(unsorted)).toEqual([]);
+		done();
+	})
+	test("Test sortTitleAscending with results already in descending order", (done) => {
+		var unsorted = [{title: "Zack"}, {title: "Drew"}, {title: "Benjamin"}, {title: "Arthur"}];
+		expect(mdb.sortTitleAscending(unsorted)).toEqual(atsorted);
+		done();
+	})
+	test("Test sortTitleAscending with results out of order", (done) => {
+		var unsorted = [{title: "Zack"}, {title: "Benjamin"}, {title: "Arthur"}, {title: "Drew"}];
+		expect(mdb.sortTitleAscending(unsorted)).toEqual(atsorted);
+		done();
+	})
 })
