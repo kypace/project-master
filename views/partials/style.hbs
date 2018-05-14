@@ -1,7 +1,7 @@
 <!--Color Scheme : http://paletton.com/palette.php?uid=70N2t0kllll0PYyb4vAvBb5Yg0P-->
 
 <style>
-{{!-- font and default tags --}}
+
 	body {
 	    margin: 0;
 	    font-family: monospace;
@@ -15,39 +15,23 @@
 		color: white;
 		font-size: 2vw;
 	}
-{{!-- banner and nav --}}
-
 	#bannerAndNav {
 		position: fixed;
 		top:0;
 		left:0;
 		width:100vw;
-		height:20%;
+		height:30vh;
 		margin:0;
 		padding: 0;
 		text-align: center;
 	}
 
-	#navigationDiv {
-		position: absolute;
-		top:0;
-		left:0;
-		height: 30%;
-		width: 100vw;
-	}
-
-	#navigationMenu {
-	    width: 100vw;
-	}
 
 	#banner {
 		margin:0;
 		padding:1%;
-		height:70%;
+		height:15vh;
 		position: sticky;
-		top:10%;
-		left:0;
-		width:100vw;
 		text-align: center;
 		display:block;
 		font-family: monospace;
@@ -60,6 +44,11 @@
 	}
 
 
+	#navigationMenu {
+	    width: 100vw;
+		padding-top: 2vh;
+		padding-bottom: 2vh;
+	}
 
 	#instructions {
 		padding:5%;
@@ -71,22 +60,16 @@
 
 	.navButton {
 		width:100%;
+	    {{!-- font-family: sans-serif;
+	    background-color:#236863;
+	    color:#F1F7F7; --}}
 	}
 
-	#search-form {
-		width:100vw;
-		height:4%;
-		position:absolute;
-		top:20%;
-		left:0;
-	}
-
-{{!-- content divs  --}}
 	#searchResults {
 	    width: 100vw;
-		height:76%;
-		position: fixed;
-		top:24%;
+		height:72vh;
+		position: relative;
+		top:29vh;
 		left:0;
 	    padding: 1vh;
 	    margin: 0;
@@ -98,9 +81,9 @@
 	}
 	.contentDiv {
 	    width: 100vw;
-		height:80%;
-		position: absolute;
-		top:20%;
+		height:76vh;
+		position: relative;
+		top:24vh;
 		left:0;
 	    padding: 1vh;
 	    margin: auto;
@@ -195,6 +178,17 @@
 	#changeinfo-form {
 		box-shadow: 3% 4% 8% 3% rgba(255, 255, 255, 0.6), 4% 7% 15% 4% rgba(255, 255, 255, 0.6);
 	}
+
+	.textonimage {
+        position:fixed;
+        text-align:center;
+        color:black;
+        top:150px;
+        left:0;
+        right:0;
+        font-size:120px;
+        border-bottom:10px solid black;
+    }
 
 
 </style>
