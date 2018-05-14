@@ -237,7 +237,14 @@ var sortReleaseAscending = (results) => {
     return sorted;
 }
 
+/**
+ * This function sorts the movie title in descending order
+ */
 var sortTitleDescending = (results) => {
+    /**
+     * @param {array} results - this is the list of results searched by user
+     * @return {string} - this is the sorted list of the results.
+     */
     var max = results.length;
     var sorted = [];
 
@@ -253,8 +260,14 @@ var sortTitleDescending = (results) => {
     return sorted;
 }
 
-
+/**
+ * This function sorts the movie title in ascending order
+ */
 var sortTitleAscending = (results) => {
+    /**
+     * @param {array} results - this is the list of results searched by user
+     * @return {string} - this is the sorted list of the results.
+     */
     var max = results.length;
     var sorted = [];
 
