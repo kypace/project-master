@@ -1,5 +1,6 @@
 const request = require('supertest');
 const app = require('./app');
+const td = require('./tastedive');
 //const auth = require('./auth');
 var mdb = require("./themoviedb");
 /*
@@ -10,7 +11,7 @@ describe('Testing auth.js...', () =>{
 	})
 });
 */
-
+// 
 describe('Testing app.js...', () => {
 	test('GET login page', () => {
 		return request(app).get('/').then(response => {
@@ -125,4 +126,39 @@ describe("Testing themoviedb.js...", ()=>{
 	})
 
 
+})
+
+describe("Testing tastedive.js...", ()=>{
+
+	var obj = {
+		Name:expect.anything(),
+		Type:expect.anything(),
+		wTeaser:expect.anything(),
+		wUrl: expect.anything(),
+		yUrl: expect.anything(),
+		yID:expect.anything()
+	}
+	//getRecommendations() Testing
+	test("check getRecommendations() if it returns the right object", (done)=>{
+		td.getRecommendations("batman").then((result)=>{
+			expect.objectContaining(obj)
+			done();
+		})
+		
+	})
+	test("getRecommendations() with no results", (done)=>{
+		expect(td.getRecommendations("dgadrfhsgfjdgkhdg")).rejects.toBe("No recommendations found for query");
+		done();
+	})
+
+	test("getRecommendations() with no argument", (done)=>{
+		expect(td.getRecommendations("")).rejects.toBe("No recommendations found for query");
+		done();
+	})
+
+	//parseRecommendations Testing
+	test("Test parseRecommendations", (done)=>{
+		expect(td.parseRecommendations([])).toBe("");
+		done();
+	})
 })
