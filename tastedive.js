@@ -66,7 +66,7 @@ var parseRecommendations = (reclist) => {
             </div>
         </div>`;
     }
-    return generated;
+    return generated.replace(/\s\s+/g, ' ');
 }
 
 module.exports = {
