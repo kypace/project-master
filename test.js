@@ -10,8 +10,12 @@ describe('Testing auth.js...', () =>{
 
 	})
 });
-*/
+*
 
+	})
+});
+*/
+// 
 describe('Testing app.js...', () => {
 	test('GET login page', () => {
 		return request(app).get('/').then(response => {
