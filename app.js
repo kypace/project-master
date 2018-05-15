@@ -148,14 +148,17 @@ app.post('/search', (request, response) => {
         themoviedb.creditSearch(request.body.personID).then((result) => {
             if (searchChoice == 'Actors') {
                 if (sortChoice == 'Dates') {
+                    currentSearch = themoviedb.sortReleaseDescending(result.cast);
                     response.render('search.hbs', {
-                        parsed: themoviedb.parseResults(themoviedb.sortReleaseDescending(result.cast))
+                        parsed: themoviedb.parseResults(currentSearch)
                     });
                 } else if (sortChoice == 'Titles') {
+                    currentSearch = themoviedb.sortTitleDescending(result.cast);
                     response.render('search.hbs', {
-                        parsed: themoviedb.parseResults(themoviedb.sortTitleDescending(result.cast))
+                        parsed: themoviedb.parseResults(currentSearch)
                     });
                 } else {
+                    currentSearch = result.cast;
                     response.render('search.hbs', {
                         parsed: themoviedb.parseResults(result.cast)
                     });
@@ -172,22 +175,23 @@ app.post('/search', (request, response) => {
                     });
                 } else {
                     if (sortChoice == 'Dates') {
+                        currentSearch = themoviedb.sortReleaseDescending(result.crew);
                         response.render('search.hbs', {
-                            parsed: themoviedb.parseResults(themoviedb.sortReleaseDescending(result.crew))
+                            parsed: themoviedb.parseResults(currentSearch)
                         });
                     } else if (sortChoice == 'Titles') {
+                        currentSearch = themoviedb.sortTitleDescending(result.crew);
                         response.render('search.hbs', {
-                            parsed: themoviedb.parseResults(themoviedb.sortTitleDescending(result.crew))
+                            parsed: themoviedb.parseResults(currentSearch)
                         });
                     } else {
+                        currentSearch = result.crew;
                         response.render('search.hbs', {
                             parsed: themoviedb.parseResults(result.crew)
                         });
                     }
                 }
             }
-            currentSearch = result;
-
         }).catch((error) => {
             if (error == 'No results found for query') {
                 response.render('search.hbs', {

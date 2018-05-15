@@ -73,7 +73,8 @@ var creditSearch = (personid) => {
                 reject('Cannot connect to TheMovieDB');
             } else if (body.cast.length < 1 && body.crew.length < 1) {
                 reject('No results found for query');
-            } else {
+            }
+            else {
                 resolve(
                     body
                 );
@@ -236,7 +237,14 @@ var sortReleaseAscending = (results) => {
     return sorted;
 }
 
+/**
+ * This function sorts the movie title in descending order
+ */
 var sortTitleDescending = (results) => {
+    /**
+     * @param {array} results - this is the list of results searched by user
+     * @return {string} - this is the sorted list of the results.
+     */
     var max = results.length;
     var sorted = [];
 
@@ -252,8 +260,14 @@ var sortTitleDescending = (results) => {
     return sorted;
 }
 
-
+/**
+ * This function sorts the movie title in ascending order
+ */
 var sortTitleAscending = (results) => {
+    /**
+     * @param {array} results - this is the list of results searched by user
+     * @return {string} - this is the sorted list of the results.
+     */
     var max = results.length;
     var sorted = [];
 
