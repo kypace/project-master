@@ -53,7 +53,7 @@
         var searchByActors = document.getElementById("searchByActors");
 
         var sortByTitles = document.getElementById("sortByTitles"),
-            sortByRelevance = document.getElementById("sortByRelevance"),
+            sortByRatings = document.getElementById("sortByRatings"),
             sortByDates = document.getElementById("sortByDates");
 
         function selectSearchMethod(el){
@@ -104,7 +104,7 @@
             selectSortingMethod(this);
         });
 
-        sortByRelevance.addEventListener("click", function(){
+        sortByRatings.addEventListener("click", function(){
             selectSortingMethod(this);
         });
 
