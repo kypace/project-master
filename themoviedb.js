@@ -125,7 +125,7 @@ var parseResults = (results) => {
             </div>
         </div>`;
     }
-    return parsed;
+    return parsed.replace(/\s\s+/g, ' ');
 }
 
 /**
@@ -159,7 +159,7 @@ var generateFavorites = (favorites) => {
             </div>
         </div>`;
     }
-    return generated;
+    return generated.replace(/\s\s+/g, ' ');
 }
 
 /**
@@ -190,7 +190,7 @@ var generatePeople = (results) => {
         </div>`;
     }
 
-    return parsed;
+    return parsed.replace(/\s\s+/g, ' ');
 }
 
 /**
