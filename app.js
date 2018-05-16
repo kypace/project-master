@@ -41,7 +41,17 @@ var checkLogin = (response) => {
 }
 
 
-
+app.get('/user_review', (request, response) => {
+    /**
+     * @param {Object} request - Express HTTP request object
+     * @param {Object} response - Express HTTP response object
+     */
+    if (checkLogin(response)) {
+        response.render('user_review.hbs', {
+            parsed: ''
+        });
+    }
+});
 
 /**
  * Initial landing page, displays login
