@@ -108,19 +108,19 @@ var parseResults = (results) => {
     var parsed = "";
     for (var i = 0; i < results.length; i++) {
         var overview = results[i].overview;
-        if (overview.length > 600)
-            overview = overview.substring(0, 600) + "..";
+        if (overview.length > 400)
+            overview = overview.substring(0, 400) + "..";
         parsed += `
-        <div style='background-color:#FFFCF8; width:100%; height:20%; text-align:left; border-top:1px solid black; '>
-            <img src='http://image.tmdb.org/t/p/w92/${results[i].poster_path}' style='left=1vw; margin:5px; height:90%; vertical-align: top; display: inline; float: left'/>
-            <div style='width:100%; height:10%; vertical-align: top; display: inline'>
+        <div class="bg-light mDiv col-lg-3 col-md-4 col-xs-12">
+            <img src='http://image.tmdb.org/t/p/w92/${results[i].poster_path}' class="mb-3 mPoster img-thumbnail rounded text-center" style="display:inline-block;" />
+            <div class="p-3 text-dark mText" >
                 <strong>Title</strong>: ${results[i].title}<br>
                 <strong>Overview</strong>: ${overview}<br>
                 <strong>Release Date</strong>: ${results[i].release_date}<br>
                 <form action="/favorites" enctype="application/json" method="post">
                     <input id= "favIndex" name="favIndex" type="hidden" value=${i} />
                     <input id= "favPush" name="favPush" type="hidden" value="yes" />
-                    <input id="Favorite" action="/favorites" type="submit" value="Favorite" />
+                    <input id="Favorite" class="btn btn-danger fButton" action="/favorites" type="submit" value="Favorite" />
                 </form>
             </div>
         </div>`;
@@ -145,16 +145,16 @@ var generateFavorites = (favorites) => {
         if (overview.length > 600)
             overview = overview.substring(0, 600) + "..";
         generated += `
-        <div style='background-color:#FFFCF8; width:100%; height:20%; text-align:left; border-top:1px solid black; '>
-            <img src='http://image.tmdb.org/t/p/w92/${favorites[i].poster_path}' style='left=1vw; margin:5px; height:90%; vertical-align: top; display: inline; float: left'/>
-            <div style='width:100%; height:10%; vertical-align: top; display: inline'>
+        <div class="bg-light mDiv col-lg-3 col-md-4 col-xs-12">
+            <img src='http://image.tmdb.org/t/p/w92/${favorites[i].poster_path}' class="mb-3 mPoster img-thumbnail rounded float-left"/>
+            <div class="p-3 text-dark mText">
                 <strong>Title</strong>: ${favorites[i].title}<br>
                 <strong>Overview</strong>: ${overview}<br>
                 <strong>Release Date</strong>: ${favorites[i].release_date}<br>
                 <form action="/favorites" enctype="application/json" method="post">
                     <input id= "favIndex" name="favIndex" type="hidden" value=${i} />
                     <input id= "favPush" name="favPush" type="hidden" value="no" />
-                    <input id="Unfavorite" action="/favorites" type="submit" value="Unfavorite" />
+                    <input id="Unfavorite" class="btn btn-danger fButton" action="/favorites" type="submit" value="Unfavorite" />
                 </form>
             </div>
         </div>`;
@@ -174,17 +174,17 @@ var generatePeople = (results) => {
 
     for (var i = 0; i < results.length; i++) {
         parsed += `
-        <div style='background-color:#FFFCF8; width:100%; height:20%; text-align:left; border-top:1px solid black; '>
-            <img src='http://image.tmdb.org/t/p/w92/${results[i].profile_path}' style='left=1vw; margin:5px; height:90%; vertical-align: top; display: inline; float: left'/>
-            <div style='width:100%; height:10%; vertical-align: top; display: inline'>
+        <div class="bg-light mDiv col-lg-3 col-md-4 col-xs-12">
+            <img src='http://image.tmdb.org/t/p/w92/${results[i].profile_path}' class="mb-3 pPoster img-thumbnail rounded"/>
+            <div class="pDesc">
                 <strong>Name</strong>: ${results[i].name}<br>
-                <strong>Known For</strong> :`
+                <strong>Known For</strong> :<br>`
         for (var j = 0; j < results[i].known_for.length; j++) {
-            parsed += `<img src='http://image.tmdb.org/t/p/w92/${results[i].known_for[j].poster_path}' style='margin:5px; height:50%; vertical-align: top; display: inline;'/>`
+            parsed += `<img src='http://image.tmdb.org/t/p/w92/${results[i].known_for[j].poster_path}' class="mb-3 mPoster2 img-thumbnail rounded"/>`
         }
         parsed += `<form action="/search" enctype="application/json" method="post">
                      <input id="personID" name="personID" type="hidden" value=${results[i].id} />
-                     <input id="personSubmit" action="/search" type="submit" value="Find Movies" />
+                     <input id="personSubmit" class="btn btn-danger fButton" action="/search" type="submit" value="Find Movies" />
                 </form>
             </div>
         </div>`;
