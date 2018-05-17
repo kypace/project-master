@@ -2,25 +2,16 @@
 <html>
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyMovieList - Search</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     {{> style}}
 </head>
 
 <body>
-    <div id="bannerAndNav" class="container-fluid" style="z-index: 5">
+    <div id="bannerAndNav" class="container-fluid bg-dark" style="z-index: 5">
         <div id="banner" class="row">Search TheMovieDB</div>
         <div id="navigationDiv" class="row navbar bg-dark">{{> navigation}}</div>
-        <form class="pb-3 bg-dark container-fluid" id="search-form" enctype="application/json" action="/search" method="post">
-            <div class="col-2"></div>
-            <input class="col-1 searchForm btn btn-secondary text-light" id="advancedSearchButton" type="button" value="Menu" />
-            <input class="col-6 searchForm" id="searchQuery" name="searchQuery" type="text" placeholder="Enter Movie Title" value="" />
-            <input class="col-1 searchForm btn btn-secondary text-light" id="searchButton" type="submit" value="Search" />
-            <input id="searchChoice" name="searchChoice" type="text" style='display:none' value="Titles" />
-            <input id="sortChoice" name="sortChoice" type="text" style='display:none' value="Relevance" />
-
-            <div class="col-2"></div>
-        </form>
         <div id="searchControls" class="p-3 container bg-dark"> 
             <div class="row">
                 <div class="bg-light col-3">Search By</div>
@@ -37,9 +28,19 @@
             </div>
         </div>
     </div>
+    <div id="search-div" class="container-fluid">
+        <form class="bg-dark row align-middle text-center" id="search-form" enctype="application/json" action="/search" method="post">
+            <div class="col-2"></div>
+            <input class="col-1 searchForm btn-sm btn btn-secondary text-light" id="advancedSearchButton" type="button" value="Menu" />
+            <input class="col-6 searchForm" id="searchQuery" name="searchQuery" type="text" placeholder="Enter Movie Title" value="" />
+            <input class="col-1 searchForm btn-sm btn btn-secondary text-light" id="searchButton" type="submit" value="Search" />
+            <input id="searchChoice" name="searchChoice" type="text" style='display:none' value="Titles" />
+            <input id="sortChoice" name="sortChoice" type="text" style='display:none' value="Relevance" />
+            <div class="col-2"></div>
+        </form>
+    </div>
 
-
-    <div id="searchResults" class="mt-4 container-fluid">
+    <div id="searchResults" class="container-fluid">
        <div class="row">{{{parsed}}}</div>
     </div>
         
