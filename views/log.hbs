@@ -8,30 +8,29 @@
 </head>
 
 <body>
-
-    <div class = "container">
-        <img class="icon" id="logIcon" src='backboard.png'/>
-        <div class="textonimage">MyMovieList</div>
+    <div class="login-banner">MyMovieList</div>
+    <div class="bg2 container-fluid"></div>
+    <div id="loginDiv" class="conatiner">
+        <div class="userAuth" id="registerDiv" style="">
+            <form id="register-form" enctype="application/json" action="/signup" method="post">
+                <input class="userAuthForm" id="registerName" name="registerName" type="text" placeholder="Username" value="" />
+                <input class="userAuthForm" id="registerPw" name="registerPw" type="password" placeholder="Password" value="" />
+                <input class="userAuthForm" id="confirmPw" name="confirmPw" type="password" placeholder="Confirm Password" value="" />
+                <input class="userAuthForm" id="register_button" type="submit" value="Register" />
+                {{{signupMsg}}}
+            </form>
+        </div>
+        <div class="userAuth" id="loginDiv" style="">
+            <form id="login-form" enctype="application/json" action="/login" method="post">
+                <input class="userAuthForm" id="loginName" name="loginName" type="text" placeholder="Username" value="" />
+                <input class="userAuthForm" id="loginPw" name="loginPw" type="password" placeholder="Password" value="" />
+                <input class="userAuthForm" id="login_button" type="submit" value="Login" />
+                {{{loginMsg}}}
+            </form>
+        </div>
     </div>
-
-    <div class="userAuth" id="registerDiv" style="left:30vw;">
-        <form id="register-form" enctype="application/json" action="/signup" method="post">
-            <input class="userAuthForm" id="registerName" name="registerName" type="text" placeholder="Username" value="" />
-            <input class="userAuthForm" id="registerPw" name="registerPw" type="password" placeholder="Password" value="" />
-            <input class="userAuthForm" id="confirmPw" name="confirmPw" type="password" placeholder="Confirm Password" value="" />
-            <input class="userAuthForm" id="register_button" type="submit" value="Register" />
-            {{{signupMsg}}}
-        </form>
-    </div>
-    <div class="userAuth" id="loginDiv" style="right:30vw;">
-        <form id="login-form" enctype="application/json" action="/login" method="post">
-            <input class="userAuthForm" id="loginName" name="loginName" type="text" placeholder="Username" value="" />
-            <input class="userAuthForm" id="loginPw" name="loginPw" type="password" placeholder="Password" value="" />
-            <input class="userAuthForm" id="login_button" type="submit" value="Login"" />
-            {{{loginMsg}}}
-        </form>
-    </div>
-
+    
+    
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
