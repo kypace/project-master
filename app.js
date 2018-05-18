@@ -40,7 +40,9 @@ var checkLogin = (response) => {
         return true;
 }
 
-
+/**
+ * User review page
+ */
 app.get('/user_review', (request, response) => {
     /**
      * @param {Object} request - Express HTTP request object
@@ -80,7 +82,7 @@ app.post('/signup', (request, response) => {
         if (request.body.registerName.length <= 0 || request.body.registerPw.length <= 0)
             msg = '<h2 class="fail">Username or password missing</h2>'
         else if (!auth.checkAvailable(request.body.registerName))
-            msg = '<h2 class="fail">Username unavailable</h2>';
+            msg = '<h2 class="fail">Username already taken</h2>';
         else if (!auth.checkSamePass(request.body.registerPw, request.body.confirmPw))
             msg = '<h2 class="fail">Passwords do not match</h2>'
         else {
@@ -94,6 +96,7 @@ app.post('/signup', (request, response) => {
         signupMsg: msg,
         loginMsg: ''
     });
+
 });
 
 /**
