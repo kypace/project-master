@@ -84,7 +84,7 @@ app.post('/signup', (request, response) => {
         else if (!auth.checkSamePass(request.body.registerPw, request.body.confirmPw))
             msg = '<h2>Passwords do not match</h2>'
         else {
-            msg = '<h2>Registered Successfully!</h2>'
+            msg = '<h2 class="success">Registered Successfully!</h2>'
             auth.store(request.body.registerName, request.body.registerPw);
         }
     } catch (err) {
