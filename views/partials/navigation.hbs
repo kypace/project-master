@@ -1,26 +1,41 @@
 <div id="navigationMenu" class="bg-dark row">
-	
-	<form action="/home" class="col-1">
-		<input class="navButton btn btn-dark text-light" id="Home" action="/home" type="submit" method="get" value="Home" />
-	</form>
-	<form action="/search"class="col-2">
-		<input class="navButton btn btn-dark text-light" id="Search" action="/search" type="submit" method="get" value="Search"/>
 
-	</form>
-	<form action="/favorites"class="col-2">
-		<input class="navButton btn btn-dark text-light" id="Favorites" action="/favorites" type="submit" method="get" value="Favorites"/>
-	</form>
-	<form action="/recommendations" enctype="application/json" class="col-2">
-		<input class = "navButton btn btn-dark text-light" id="Recommendations" action="/recommendations" type="submit" method="get" value="Recommendations"/>
-	</form>
-	<form action="/user_review" class="col-2">
-		<input class="navButton btn btn-dark text-light" id="user_review" action="/user_review" type="submit" method="get" value="User Review" />
-	</form>
-	<form action="/settings"class="col-2">
-		<input class="navButton btn btn-dark text-light" id="Settings" action="/settings" type="submit" method="get" value="Settings"/>
-	</form>
-	<form action="/logout"class="col-1">
-		<input class="navButton btn btn-dark text-light" id="Logout" action="/" type="submit" method="get" value="Logout"/>
-	</form>
+	<div class = "col-6">
+		<div class = "row">
+			<form action="/home" class="col-3">
+				<input class="navButton btn btn-dark text-light" id="Home" action="/home" type="submit" method="get" value="Home" />
+			</form>
+
+			<form action="/search"class="col-3">
+				<input class="navButton btn btn-dark text-light" id="Search" action="/search" type="submit" method="get" value="Search"/>
+			</form>
+
+			<form action="/favorites"class="col-3">
+				<input class="navButton btn btn-dark text-light" id="Favorites" action="/favorites" type="submit" method="get" value="Favorites"/>
+			</form>
+
+			<form action="/recommendations" enctype="application/json" class="col-3">
+				<input class = "navButton btn btn-dark text-light" id="Recommendations" action="/recommendations" type="submit" method="get" value="Recommendations"/>
+			</form>
+		</div>	
+	</div class = "col-6">
+		<div class = "row">
+			<form action="/user_review" class="col-3">
+				<input class="navButton btn btn-dark text-light" id="user_review" action="/user_review" type="submit" method="get" value="User Review" />
+			</form>
+
+			<form action="/top_movies" class="col-3">
+				<input class="navButton btn btn-dark text-light" id="top-movies" action="/top_movies" type="submit" method="get" value="Top Rated Movies" />
+			</form>
+
+			<form action="/settings"class="col-3">
+				<input class="navButton btn btn-dark text-light" id="Settings" action="/settings" type="submit" method="get" value="Settings"/>
+			</form>
+
+			<form action="/logout"class="col-3">
+				<input class="navButton btn btn-dark text-light" id="Logout" action="/" type="submit" method="get" value="Logout"/>
+			</form>
+		</div>
+	</div>
 	{{!-- <img class="icon" id="navIcon" src='clapper-icon.png'/> --}}
 </div>
