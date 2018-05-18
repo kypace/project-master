@@ -15,43 +15,37 @@
     </div>
 
     <div class="contentDiv bg-dark" id="setPage">
-			<form class="setting-forms pt-2 pb-2 mt-1 bg-dark" id="changeinfo-form" enctype="application/json" action="/settings" method="post">
+			<form class="setting-forms p-3 bg-dark" id="changeinfo-form" enctype="application/json" action="/settings" method="post">
 				<div class="form-row">
-					<div class="form-group col-md-2"></div>
-					<div class="form-group col-md-4">
+					<div class="form-group col">
 						<label class="text-light" for="newUsername">New Username</label>
 						<input class="changeInfoForm form-control" id="newUsername" name="newUsername" type="text" placeholder="New Username" value="" />
 					</div>	
 					
 				</div>
 				<div class="form-row">
-					<div class="form-group col-md-2"></div>
-					<div class="form-group col-md-4">
+					<div class="form-group col">
 						<label class="text-light"for="newPw">New Password</label>
 						<input class="changeInfoForm form-control" id="newPw" name="newPw" type="password" placeholder="New Password" value="" />
 					</div>
-					<div class="form-group col-md-4">
+					<div class="form-group col">
 						<label class="text-light"for="confirmNewPw">Confirm New Password</label>
-						<input class="changeInfoForm form-control" id="confirmNewPw" name="confirmNewPw" type="password" placeholder="New Password (Confirm)" value="" />	
+						<input class="changeInfoForm form-control" id="confirmNewPw" name="confirmNewPw" type="password" placeholder="(Confirm)" value="" />	
 					</div>	
-					<div class="form-group col-md-2"></div>
 				</div>
 				<div class="form-row">
-					<div class="form-group col-md-2"></div>
-					<div class="form-group col-md-4">
+					<div class="form-group col">
 						<label class="text-light"for="oldPw">Old Password</label>
 						<input class="changeInfoForm form-control" id="oldPw" name="oldPw" type="password" placeholder="Old Password" value="" />
 					</div>
-					<div class="form-group col-md-4">
+					<div class="form-group col">
 						<label class="text-light"for="confirmOldPw">Confirm Old Password</label>
-						<input class="changeInfoForm form-control" id="confirmOldPw" name="confirmOldPw" type="password" placeholder="Old Password (Confirm)" value="" />
+						<input class="changeInfoForm form-control" id="confirmOldPw" name="confirmOldPw" type="password" placeholder="(Confirm)" value="" />
 					</div>
-					<div class="form-group col-md-2"></div>
 				</div>
 				<br/>
 				<div class="form-row">
-					<div class="form-group col-md-3"></div>
-					<input class="col-md-6 changeInfoForm btn btn-secondary" id="submit_button" type="submit" value="Submit" />
+					<input class="col changeInfoForm btn btn-secondary" id="submit_button" type="submit" value="Submit" />
 				</div>	
 				{{{settingsMsg}}}
 			</form>
