@@ -92,14 +92,15 @@
 
 {{!-- content divs  --}}
 	#searchResults {
-	    width: 100vw;
+	    width: 100%;
 		height:76%;
 		position: fixed;
 		top:24%;
 		left:0;
 	    padding: 1vh;
 	    margin: 0;
-		overflow: auto;
+		overflow-y: auto;
+		overflow-x:hidden;
 		background-image: url(http://getwallpapers.com/wallpaper/full/a/d/2/374134.jpg);
 		background-position: center;
 		background-size: cover;
@@ -113,10 +114,11 @@
 		left:0;
 	    padding: 1vh;
 	    margin: auto;
-		overflow: auto;
 		background-image: url(http://getwallpapers.com/wallpaper/full/a/d/2/374134.jpg);
 		background-position: center;
 		background-size: cover;
+		overflow-y: auto;
+		overflow-x:hidden;
 	}
 
 	.userAuth {
