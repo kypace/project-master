@@ -1,32 +1,59 @@
 <!--Color Scheme : http://paletton.com/palette.php?uid=70N2t0kllll0PYyb4vAvBb5Yg0P-->
 
 <style>
-{{!-- font and default tags --}}
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {...} 
+		/* Extra small devices (phones, 600px and down) */
+	@media only screen and (max-width: 600px) {...} 
 
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {...} 
+	/* Large devices (laptops/desktops, 992px and up) */
+	@media only screen and (min-width: 992px) {...} 
 
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {...}
+	/* Extra large devices (large laptops and desktops, 1200px and up) */
+	@media only screen and (min-width: 1200px) {...}
+
+	{{!-- font and default tags --}}
+
+	@font-face {
+		font-family: nav-buttons-font;
+		
+		src: url('Akura Popo.otf')
+	}
+
+	@font-face {
+		font-family:banners-font;
+		{{!-- src: url('MR FINK PERSONAL USE.ttf'); --}}
+		src: url('Corporation Games.otf');
+	}
+	@font-face {
+		font-family: inst-font;
+		src: url('Roboto-Regular.ttf')
+		
+	}
+
+	@font-face {
+		font-family: buttons-font;
+		src: url('Roboto-Thin.ttf')
+	}
 
 	body {
 	    margin: 0;
-	    font-family: monospace;
+	    font-family: inst-font;
 	    background-color:#FFFCF8;
 	    color:#070400;
 	    font-size:1vw;
 	    overflow: hidden;
 	}
-
 	h2 {
-		color: red;
 		font-size: 2vw;
+		color:#FFFCF8;
+	}
+	h2.fail {
+		color: red;
+		font-size: 1.5vw;
 	}
 
 	h2.success {
 		color:lightgreen;
+		font-size: 1.5vw;
 	}
 
 {{!-- login page --}}
@@ -37,8 +64,8 @@
 		left:0;
 		width:100vw;
 		text-align: center;
-		font-family: monospace;
-		font-size: 5vh;
+		font-family: banners-font;
+		font-size: 4vw;
 		color: white;
 	}
 
@@ -51,8 +78,8 @@
 		background-image: url("https://static1.squarespace.com/static/5702ab9d746fb9634796c9f9/5702ad93b09f95bfee70b342/57eab7c5725e25b5bb0de771/1476720976218/Regency%2C+San+Francisco%2C+1992.jpg?format=2500w");
 		background-size: cover;
 		background-position: center;
-		-webkit-filter: blur(5px);
-  		filter: blur(5px);
+		-webkit-filter: blur(2px);
+  		filter: blur(2px);
 		z-index: -1;
 	}
 
@@ -68,6 +95,7 @@
 		background-image: url("https://static1.squarespace.com/static/5702ab9d746fb9634796c9f9/5702ad93b09f95bfee70b342/57eab7c5725e25b5bb0de771/1476720976218/Regency%2C+San+Francisco%2C+1992.jpg?format=2500w");
 		background-size: cover;
 		background-position: center; 
+		font-family: buttons-font;
 	}
 
 	#registerDiv {
@@ -95,7 +123,9 @@
 {{!-- banner and nav --}}
 	
 	.navButton {
-		width:100%:
+		width:100%;
+		font-family: nav-buttons-font;
+
 	}
 
 	#bannerAndNav {
@@ -131,8 +161,8 @@
 		width:100vw;
 		text-align: center;
 		display:block;
-		font-family: monospace;
-		font-size: 5vh;
+		font-family: banners-font;
+		font-size: 3vw;
 		color: white;
 
 		background-image: url(http://www.studiomalibu.com/EQUIPMENT_files/lit-stage-abstract-wallpaper-1920x1200-2979-filtered.jpg);
@@ -156,6 +186,7 @@
 		top:20%;
 		left:0;
 		height:4%;
+		font-family: nav-buttons-font;
 	}
 
 {{!-- content divs  --}}
@@ -283,17 +314,6 @@
 		box-shadow: 3% 4% 8% 3% rgba(255, 255, 255, 0.6), 4% 7% 15% 4% rgba(255, 255, 255, 0.6);
 	}
 
-	.textonimage {
-        position:fixed;
-        text-align:center;
-        color:black;
-        top:150px;
-        left:0;
-        right:0;
-        font-size:120px;
-        border-bottom:10px solid black;
-        font-family: "Times New Roman", Times, serif;
-    }
 	{{!-- settings --}}
 	
 	.setting-forms {
@@ -305,6 +325,7 @@
 		right:0;
 		margin: auto;
 		border-radius: 5px;
+		font-family: buttons-font;
 	}
 
 </style>
