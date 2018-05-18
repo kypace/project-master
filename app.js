@@ -78,17 +78,17 @@ app.post('/signup', (request, response) => {
     var msg = ''
     try {
         if (request.body.registerName.length <= 0 || request.body.registerPw.length <= 0)
-            msg = '<h2>Username or password missing</h2>'
+            msg = '<h2 class="fail">Username or password missing</h2>'
         else if (!auth.checkAvailable(request.body.registerName))
-            msg = '<h2>Username unavailable</h2>';
+            msg = '<h2 class="fail">Username unavailable</h2>';
         else if (!auth.checkSamePass(request.body.registerPw, request.body.confirmPw))
-            msg = '<h2>Passwords do not match</h2>'
+            msg = '<h2 class="fail">Passwords do not match</h2>'
         else {
-            msg = '<h2>Registered Successfully!</h2>'
+            msg = '<h2 class="success">Registered Successfully!</h2>'
             auth.store(request.body.registerName, request.body.registerPw);
         }
     } catch (err) {
-        msg = '<h2>Username or password missing</h2>'
+        msg = '<h2 class="fail">Username or password missing</h2>'
     }
     response.render('log.hbs', {
         signupMsg: msg,
@@ -107,12 +107,12 @@ app.post('/login', (request, response) => {
     if (auth.checkAvailable(request.body.loginName)) {
         response.render('log.hbs', {
             signupMsg: '',
-            loginMsg: '<h2>Username does not exist</h2>'
+            loginMsg: '<h2 class="fail">Username does not exist</h2>'
         });
     } else if (!auth.check(request.body.loginName, request.body.loginPw)) {
         response.render('log.hbs', {
             signupMsg: '',
-            loginMsg: '<h2>Incorrect password</h2>'
+            loginMsg: '<h2 class="fail">Incorrect password</h2>'
         });
     } else {
         userFavorites = auth.getFavorites();

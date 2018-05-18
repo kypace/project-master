@@ -3,34 +3,95 @@
 
 <head>
     <title>MyMovieList - Login</title>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     {{> style}}
 </head>
 
 <body>
+    <div class="login-banner">MyMovieList</div>
+    <div class="bg container-fluid"></div>
+    <div id="loginContainer">
+        <div id="registerDiv">
+            <form id="register-form" class="p-3" enctype="application/json" action="/signup" method="post">
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label class="text-light" for="registerName">New Username</label>
+                        <input id="registerName" class="form-control" name="registerName" type="text" placeholder="Username" value="" />
+                    </div>			
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label class="text-light" for="registerPw">Type Password</label>
+                        <input id="registerPw" class="form-control" name="registerPw" type="password" placeholder="Password" value="" />
+                    </div>			
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label class="text-light" for="confirmPw">Confirm Password</label>
+                        <input id="confirmPw" class="form-control" name="confirmPw" type="password" placeholder="Confirm Password" value="" />
+                    </div>			
+                </div>
+                <div class="form-row">
+                    <input class="btn btn-danger col" id="register_button" type="submit" value="Register" />		
+                </div>
+                <div class="form-row">
+                    {{{signupMsg}}}
+                </div>
+                <div class="form-row">
+                    <button id="loginButton" class="col btn btn-secondary" type="button">already have account?</button>
+                </div>   
+            </form>
+        </div>
+        
+        <div id="loginDiv">
+            <form id="login-form" class="p-3" enctype="application/json" action="/login" method="post">   
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label class="text-light" for="loginName">Username</label>
+                        <input id="loginName" class="form-control" name="loginName" type="text" placeholder="Username" value="" />
+                    </div>			
+                </div>
+                <div class="form-row">
+                    <div class="form-group col">
+                        <label class="text-light" for="loginPw">Type Password</label>
+                        <input id="loginPw" class="form-control" name="loginPw" type="password" placeholder="Password" value="" />
+                    </div>			
+                </div>
+                <div class="form-row">
+                    <input class="btn btn-danger col" id="login_button" type="submit" value="Login" />
+                </div>
+                <div class="form-row" style="color:red;">
+                    {{{loginMsg}}}
+                </div>
+                <div class="form-row">
+                    <button id="signupButton" class="col btn btn-secondary" type="button">sign up</button>
+                </div>   
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        var loginDiv = document.getElementById("loginDiv"),
+            registerDiv = document.getElementById("registerDiv"),
+            signupButton = document.getElementById("signupButton"),
+            loginButton = document.getElementById("loginButton");
 
-    <div class = "container">
-        <img class="icon" id="logIcon" src='backboard.png'/>
-        <div class="textonimage">MyMovieList</div>
-    </div>
 
-    <div class="userAuth" id="registerDiv" style="left:30vw;">
-        <form id="register-form" enctype="application/json" action="/signup" method="post">
-            <input class="userAuthForm" id="registerName" name="registerName" type="text" placeholder="Username" value="" />
-            <input class="userAuthForm" id="registerPw" name="registerPw" type="password" placeholder="Password" value="" />
-            <input class="userAuthForm" id="confirmPw" name="confirmPw" type="password" placeholder="Confirm Password" value="" />
-            <input class="userAuthForm" id="register_button" type="submit" value="Register" />
-            {{{signupMsg}}}
-        </form>
-    </div>
-    <div class="userAuth" id="loginDiv" style="right:30vw;">
-        <form id="login-form" enctype="application/json" action="/login" method="post">
-            <input class="userAuthForm" id="loginName" name="loginName" type="text" placeholder="Username" value="" />
-            <input class="userAuthForm" id="loginPw" name="loginPw" type="password" placeholder="Password" value="" />
-            <input class="userAuthForm" id="login_button" type="submit" value="Login"" />
-            {{{loginMsg}}}
-        </form>
-    </div>
+        signupButton.addEventListener("click", function(){
+            loginDiv.style.display = "none";
+            registerDiv.style.display = "block";
+        })
+
+        loginButton.addEventListener("click", ()=>{
+            loginDiv.style.display = "block";
+            registerDiv.style.display = "none";
+        })
+
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 
 </html>
