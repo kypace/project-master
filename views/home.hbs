@@ -4,7 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyMovieList - Home</title>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     {{> style}}
 </head>
 
@@ -14,20 +14,16 @@
         <div id="navigationDiv" class="row navbar bg-dark">{{> navigation}}</div>
     </div>
     <div class="contentDiv bg-dark " id="homePage">
-        <strong id="instructions" class="text-white">
-            {{!-- <img class="icon" id="homeIcon" src='film-icon.png' /> --}}
-
-            Use the navigation bar on the top to go through our website's features:<br>
-
-
-            Home - Return to this page<br>
-            Search - Search for movies from TheMovieDB based on key words, actors and directors<br>
-            Favorites - Save your favorite movies to a list from the search<br>
-            Recommendations - Generate recommendations for movies based on your favorites<br>
-            Settings - Change your username or password<br>
-            Logout - End your session<br>
-        </strong>
-        
+        <div id="instructions" class="text-white container">
+            <p class="row"><strong>Use the navigation bar on the top to go through our website's features:</strong></p><br>
+            <p class="row"><strong>Home</strong> - Return to this page</p>
+            <p class="row"><strong>Search</strong> - Search for movies from TheMovieDB based on key words, actors and directors</p>
+            <p class="row"><strong>Favorites</strong> - Save your favorite movies to a list from the search</p>
+            <p class="row"><strong>Recommendations</strong> - Generate recommendations for movies based on your favorites</p>
+            <p class="row"><strong>User Reviews</strong> - See Users Reviews</p>
+            <p class="row"><strong>Settings</strong> - Change your username or password</p>
+            <p class="row"><strong>Logout</strong> - End your session</p>
+        </div>    
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
