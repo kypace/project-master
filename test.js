@@ -77,6 +77,16 @@ describe('Testing app.js...', () => {
 			expect(response.statusCode).toBe(200)
 		})
 	});
+	test('GET user_review page', () => {
+		return request(app).get('/user_review').then(response => {
+			expect(response.statusCode).toBe(200)
+		})
+	});
+	test('GET top_movies page', () => {
+		return request(app).get('/top_movies').then(response => {
+			expect(response.statusCode).toBe(200)
+		})
+	});
 });
 
 

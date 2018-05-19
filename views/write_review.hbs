@@ -3,19 +3,27 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyMovieList - User Reviews</title>
+    <title>MyMovieList - Write Review</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     {{> style}}
 </head>
 
 <body>
     <div id="bannerAndNav" class="container-fluid bg-dark">
-        <div id="banner" class="row bg-dark text-white "><div id="banner-text">User Reviews</div></div>
+        <div id="banner" class="row bg-dark text-white "><div id="banner-text">Write Review</div></div>
         <div id="navigationDiv" class="row navbar bg-dark">{{> navigation}}</div>
     </div>
-    <div class="contentDiv container-fluid bg-dark img-fluid" id="reviewPage">
-        <div class="results row" id="reviewResults">
-            {{{reviews}}}
+    <div class="contentDiv container-fluid bg-dark img-fluid" id="writePage">
+        <div id="writeDiv">
+            <div class="row text-white" id="banner-text">{{{movietitle}}}</div>
+            <img src='http://image.tmdb.org/t/p/w92/{{{movieposter}}}' />
+            <form id="userReview" action="/user_review" enctype="application/json" method="post">
+                <input name="revIndex" id="revIndex" value={{{revIndex}}} type="hidden" />
+                <div class="row text-white" id="banner-text">Movie Rating (0-10)</div>
+                <input type="number" id="movieRating" name="movieRating" min="0" max="10" value="0" />
+                <textarea name="movieReview" id="movieReview" form="userReview" placeholder="Write review here..." style="width:"></textarea>
+                <input type="submit" value="Submit" />
+            </form>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

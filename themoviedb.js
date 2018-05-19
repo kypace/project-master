@@ -122,6 +122,11 @@ var parseResults = (results) => {
                     <input id= "favPush" name="favPush" type="hidden" value="yes" />
                     <input id="Favorite" class="btn btn-danger fButton" action="/favorites" type="submit" value="Favorite" />
                 </form>
+                <form action="/write_review" enctype="application/json" method="get">
+                    <input id="revIndex" name="revIndex" type="hidden" value=${i} />
+                    <input id= "revPush" name="revPush" type="hidden" value="yes" />
+                    <input id="WriteReview" class="btn btn-danger wButton" action="/write_review" type="submit" value="Write Review" />
+                </form>
             </div>
         </div>`;
     }
@@ -155,6 +160,40 @@ var generateFavorites = (favorites) => {
                     <input id= "favIndex" name="favIndex" type="hidden" value=${i} />
                     <input id= "favPush" name="favPush" type="hidden" value="no" />
                     <input id="Unfavorite" class="btn btn-danger fButton" action="/favorites" type="submit" value="Unfavorite" />
+                </form>
+            </div>
+        </div>`;
+    }
+    return generated.replace(/\s\s+/g, ' ');
+}
+
+/**
+ * This function creates the on-screen list of movies, ratings and reviews for the user review page
+ */
+var generateReviews = (reviews) => {
+    /**
+     * @param {array} reviews - this is the list of reviews saved by the user
+     * @return {string} - this is the styling and divs of the review page, or a message if no reviews have been saved 
+     */
+    var generated = "";
+    if (reviews.length < 1) {
+        return "<h2>No reviews have been saved!</h2>";
+    }
+    for (var i = 0; i < reviews.length; i++) {
+        var overview = reviews[i].overview;
+        if (overview.length > 600)
+            overview = overview.substring(0, 600) + "..";
+        generated += `
+        <div class="bg-light mDiv col-lg-3 col-md-4 col-xs-12">
+            <img src='http://image.tmdb.org/t/p/w92/${reviews[i].poster_path}' class="mb-3 mPoster img-thumbnail rounded float-left"/>
+            <div class="p-3 text-dark mText">
+                <strong>Title</strong>: ${reviews[i].title}<br>
+                <strong>Rating</strong>: ${reviews[i].rating}<br>
+                <strong>Review</strong>: ${reviews[i].review}<br>
+                <form action="/user_review" enctype="application/json" method="post">
+                    <input id= "revIndex" name="revIndex" type="hidden" value=${i} />
+                    <input id= "revPush" name="revPush" type="hidden" value="no" />
+                    <input id="Delete" class="btn btn-danger fButton" type="submit" value="Delete" />
                 </form>
             </div>
         </div>`;
@@ -292,6 +331,7 @@ module.exports = {
     readResults,
     parseResults,
     generateFavorites,
+    generateReviews,
     generatePeople,
     sortReleaseDescending,
     sortReleaseAscending,
