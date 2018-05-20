@@ -1,2 +1,2 @@
 # project-master
-Master repo, always have working copy
+Team 9 - CIT Project Term - MyMovieList

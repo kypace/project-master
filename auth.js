@@ -1,12 +1,25 @@
 const bcrypt = require('bcrypt');
 const fs = require('fs');
 
+/**
+ * @type {int} - salt (random input data) for bCrypt hashing
+ */
 const saltRounds = 10;
 
-const filename = 'auth.json'; // holds all user data
+/**
+ * @type {String} - filename of user data
+ */
+const filename = 'auth.json';
 
-var users; // users loaded from file
-var currentName = ''; // current user's username
+/**
+ * @type {Object[]} - JSON user objects loaded from file
+ */
+var users;
+
+/**
+ * @type {String} - current username
+ */
+var currentName = '';
 
 
 /**

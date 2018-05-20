@@ -6,6 +6,9 @@ const tastedive = require('./tastedive');
 const themoviedb = require('./themoviedb')
 const auth = require('./auth')
 
+/**
+ * @type {Object} - Express application
+ */
 var app = express();
 
 hbs.registerPartials(__dirname + '/views/partials');
@@ -17,11 +20,26 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(express.urlencoded());
 
-var currentSearch; // tracks current search results, used to add favorites
-var searchChoice; // tracks current search option
-var sortChoice; // tracks current sort option for actor and director search
-var userFavorites = []; // tracks current user favorites
-var userReviews = []; // tracks current user reviews
+/**
+ * @type {Object[]} - tracks current search results, used to add favorites
+ */
+var currentSearch;
+/**
+ * @type {Object} - tracks current search option
+ */
+var searchChoice;
+/**
+ * @type {String} - tracks current sort option for actor and director search
+ */
+var sortChoice;
+/**
+ * @type {Object[]} - tracks current user favorites
+ */
+var userFavorites = [];
+/**
+ * @type {Object[]} - tracks current user reviews
+ */
+var userReviews = [];
 
 /**
  * Initial landing page, displays login

@@ -1,14 +1,17 @@
 const request = require('request');
 
+/**
+ * @type {String} - TheMovieDB API key
+ */
 var key = '4f7f94aba387fbfbfa50c54655774e78';
 
 /**
- * This function searches the movieDB for movies with the user's query
+ * Searches themovieDB for movies with the user's query
  */
 var search = (query) => {
     /**
-     * @param {string} query - this is the user's search query
-     * @return {object} - returns the results of the movie search (or error message if no results or an erro)
+     * @param {String} query - this is the user's search query
+     * @return {Object} returns the results of the movie search (or error message if no results or an erro)
      */
     return new Promise((resolve, reject) => {
         request({
@@ -32,12 +35,12 @@ var search = (query) => {
 
 
 /**
- * This function searches the movieDB for celebrities with user's query
+ * Searches the movieDB for celebrities with user's query
  */
 var peopleSearch = (query) => {
     /**
-     * @param {string} query - this is the user's search query
-     * @return {object} - returns the results of the people search (or an error message if no results)
+     * @param {String} query - this is the user's search query
+     * @return {Object} returns the results of the people search (or an error message if no results)
      */
     return new Promise((resolve, reject) => {
         request({
@@ -61,7 +64,7 @@ var peopleSearch = (query) => {
 
 
 /**
- * This function searches the movieDB for actors/actrsses with user input (person's name)
+ * Searches the movieDB for actors/actrsses with user input (person's name)
  */
 var creditSearch = (personid) => {
     return new Promise((resolve, reject) => {
@@ -85,11 +88,11 @@ var creditSearch = (personid) => {
 
 
 /**
- * This function reads the results of the search to the console log
+ * Reads the results of the search to the console log
  */
 var readResults = (results) => {
     /**
-     * @param {array} results - this is the list of search results
+     * @param {Object[]} results - this is the list of search results
      */
     for (var i = 0; i < results.length; i++) {
         console.log(`Title: ${results[i].title}`);
@@ -98,12 +101,12 @@ var readResults = (results) => {
 }
 
 /**
- * This function creates the on-screen list of movies, artwork and desciptions from the search
+ * Creates the on-screen list of movies, artwork and desciptions from the search
  */
 var parseResults = (results) => {
     /**
-     * @param {array} results - this is the list of search results
-     * @return {string} - this is the styling and divs of the search page
+     * @param {Object[]} results - this is the list of search results
+     * @return {String} this is the styling and divs of the search page
      */
     var parsed = "";
     for (var i = 0; i < results.length; i++) {
@@ -134,12 +137,12 @@ var parseResults = (results) => {
 }
 
 /**
- * This function creates the on-screen list of movies, artwork and desciptions for the favorites page
+ * Creates the on-screen list of movies, artwork and desciptions for the favorites page
  */
 var generateFavorites = (favorites) => {
     /**
-     * @param {array} favorites - this is the list of favorites saved by the user
-     * @return {string} - this is the styling and divs of the favorite page, or a message if no favorites have been saved 
+     * @param {Object[]} favorites - this is the list of favorites saved by the user
+     * @return {String} this is the styling and divs of the favorite page, or a message if no favorites have been saved 
      */
     var generated = "";
     if (favorites.length < 1) {
@@ -168,12 +171,12 @@ var generateFavorites = (favorites) => {
 }
 
 /**
- * This function creates the on-screen list of movies, ratings and reviews for the user review page
+ * Creates the on-screen list of movies, ratings and reviews for the user review page
  */
 var generateReviews = (reviews) => {
     /**
-     * @param {array} reviews - this is the list of reviews saved by the user
-     * @return {string} - this is the styling and divs of the review page, or a message if no reviews have been saved 
+     * @param {Object[]} reviews - this is the list of reviews saved by the user
+     * @return {String} this is the styling and divs of the review page, or a message if no reviews have been saved 
      */
     var generated = "";
     if (reviews.length < 1) {
@@ -202,12 +205,12 @@ var generateReviews = (reviews) => {
 }
 
 /**
- * This function creates the on-screen list of celebrities
+ * Creates the on-screen list of celebrities
  */
 var generatePeople = (results) => {
     /**
-     * @param {array} results - this is the list of celebrities searched by user
-     * @return {string} - this is the styling and divs of the search page
+     * @param {Object[]} results - this is the list of celebrities searched by user
+     * @return {String} this is the styling and divs of the search page
      */
     var parsed = "";
 
@@ -233,12 +236,12 @@ var generatePeople = (results) => {
 }
 
 /**
- * This function sorts the release date of the movies in descending order
+ * Sorts the release date of the movies in descending order
  */
 var sortReleaseDescending = (results) => {
     /**
-     * @param {array} results - this is the list of results searched by user
-     * @return {string} - this is the sorted list of the results.
+     * @param {Object[]} results - this is the list of results searched by user
+     * @return {String} this is the sorted list of the results.
      */
     var max = results.length;
     var sorted = [];
@@ -255,12 +258,12 @@ var sortReleaseDescending = (results) => {
 }
 
 /**
- * This function sorts the release date of the movies in ascending order
+ * Sorts the release date of the movies in ascending order
  */
 var sortReleaseAscending = (results) => {
     /**
-     * @param {array} results - this is the list of results searched by user
-     * @return {string} - this is the sorted list of the results.
+     * @param {Object[]} results - this is the list of results searched by user
+     * @return {String} this is the sorted list of the results.
      */
     var max = results.length;
     var sorted = [];
@@ -277,12 +280,12 @@ var sortReleaseAscending = (results) => {
 }
 
 /**
- * This function sorts the movie title in descending order
+ * Sorts the movie title in descending order
  */
 var sortTitleDescending = (results) => {
     /**
-     * @param {array} results - this is the list of results searched by user
-     * @return {string} - this is the sorted list of the results.
+     * @param {Object[]} results - this is the list of results searched by user
+     * @return {String} this is the sorted list of the results.
      */
     var max = results.length;
     var sorted = [];
@@ -300,12 +303,12 @@ var sortTitleDescending = (results) => {
 }
 
 /**
- * This function sorts the movie title in ascending order
+ * Sorts the movie title in ascending order
  */
 var sortTitleAscending = (results) => {
     /**
-     * @param {array} results - this is the list of results searched by user
-     * @return {string} - this is the sorted list of the results.
+     * @param {Object[]} results - this is the list of results searched by user
+     * @return {String} this is the sorted list of the results.
      */
     var max = results.length;
     var sorted = [];
@@ -327,7 +330,6 @@ module.exports = {
     search,
     peopleSearch,
     creditSearch,
-    readResults,
     readResults,
     parseResults,
     generateFavorites,

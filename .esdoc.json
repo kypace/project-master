@@ -1,7 +1,7 @@
 {
     "source": "./",
     "destination": "./docs",
-    "excludes": ["node_modules"],
+    "excludes": ["node_modules", "docs", "coverage"],
     "plugins": [
     {
         "name": "esdoc-standard-plugin",
@@ -16,11 +16,18 @@
                 "source": "./",
                 "interfaces": ["describe", "it", "context", "suite", "test"],
                 "includes": ["(spec|Spec|test|Test)\\.js$"],
-                "excludes": ["\\.config\\.js$"]
+                "excludes": ["\\.config\\.js$", "node_modules"]
             }
         }
     },
     {
         "name": "esdoc-node"
+    },
+    {
+        "name": "esdoc-ecmascript-proposal-plugin",
+        "option":
+        {
+            "all": true
+        }
     }]
 }
