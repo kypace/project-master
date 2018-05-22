@@ -369,6 +369,7 @@ app.get('/user_review', (request, response) => {
      * @param {Object} response - Express HTTP response object
      */
     if (auth.isLogged()) {
+        userReviews = auth.getReviews();
         response.render('user_review.hbs', {
             reviews: themoviedb.generateReviews(userReviews)
         });
@@ -427,7 +428,7 @@ app.get('/top_movies', (request, response) => {
      */
     if (auth.isLogged()) {
         response.render('top_movies.hbs', {
-            top_movies: ''
+            top_movies: themoviedb.generateRankings(auth.sortTopMovies())
         });
     } else {
         response.render('log.hbs', {

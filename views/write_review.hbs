@@ -19,6 +19,7 @@
             <img src='http://image.tmdb.org/t/p/w92/{{{movieposter}}}' />
             <form id="userReview" action="/user_review" enctype="application/json" method="post">
                 <input name="revIndex" id="revIndex" value={{{revIndex}}} type="hidden" />
+                <input name="revPush" id="revPush" value="yes" type="hidden" />
                 <div class="row text-white" id="banner-text">Movie Rating (0-10)</div>
                 <input type="number" id="movieRating" name="movieRating" min="0" max="10" value="0" />
                 <textarea name="movieReview" id="movieReview" form="userReview" placeholder="Write review here..." style="width:"></textarea>

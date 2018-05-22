@@ -227,6 +227,45 @@ var getCurrentName = () => {
     return currentName;
 }
 
+/**
+ * generates list of highest rated movies
+ */
+var sortTopMovies = () => {
+    /**
+     * @return {Object[]} movies - array of movies with rating averages
+     */
+    var movies = [];
+    for (var i = 0; i < users.length; i++) { // iterate through users
+        for (var j = 0; j < users[i].reviews.length; j++) { // iterate through user reviews
+            var matchIndex = 0;
+            var matched = false;
+            for (var k = 0; k < movies.length; k++) { // iterate through logged movies
+                if (users[i].reviews[j].id == movies[k].id) {
+                    matchIndex = k;
+                    matched = true;
+                }
+            }
+            if (matched) {
+                movies[matchIndex].rating_sum += users[i].reviews[j].rating;
+                movies[matchIndex].rating_count++;
+            }
+            else {
+                var newMovie = JSON.parse(JSON.stringify(users[i].reviews[j]));
+                movies.push(newMovie);
+                movies[movies.length - 1].rating_sum = Number(movies[movies.length - 1].rating);
+                movies[movies.length - 1].rating_count = 1;
+                delete movies[movies.length - 1].rating;
+                delete movies[movies.length - 1].review; 
+            }
+        }
+    }
+    for (var l = 0; l < movies.length; l++) {
+        movies[l].rating_avg = movies[l].rating_sum / movies[l].rating_count;
+    }
+    movies.sort(function(a, b){return b.rating_avg - a.rating_avg})
+    return movies;
+}
+
 
 /**
  * exports functions
@@ -244,5 +283,6 @@ module.exports = {
     logoff,
     isLogged,
     getCurrentName,
-    changeInfo
+    changeInfo,
+    sortTopMovies
 };
