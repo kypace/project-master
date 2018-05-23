@@ -1,14 +1,17 @@
 const request = require('request');
 
+/**
+ * @type {String} - TheMovieDB API key
+ */
 var key = '4f7f94aba387fbfbfa50c54655774e78';
 
 /**
- * This function searches the movieDB for movies with the user's query
+ * Searches themovieDB for movies with the user's query
  */
 var search = (query) => {
     /**
-     * @param {string} query - this is the user's search query
-     * @return {object} - returns the results of the movie search (or error message if no results or an erro)
+     * @param {String} query - this is the user's search query
+     * @return {Object} returns the results of the movie search (or error message if no results or an erro)
      */
     return new Promise((resolve, reject) => {
         request({
@@ -32,12 +35,12 @@ var search = (query) => {
 
 
 /**
- * This function searches the movieDB for celebrities with user's query
+ * Searches the movieDB for celebrities with user's query
  */
 var peopleSearch = (query) => {
     /**
-     * @param {string} query - this is the user's search query
-     * @return {object} - returns the results of the people search (or an error message if no results)
+     * @param {String} query - this is the user's search query
+     * @return {Object} returns the results of the people search (or an error message if no results)
      */
     return new Promise((resolve, reject) => {
         request({
@@ -61,7 +64,7 @@ var peopleSearch = (query) => {
 
 
 /**
- * This function searches the movieDB for actors/actrsses with user input (person's name)
+ * Searches the movieDB for actors/actrsses with user input (person's name)
  */
 var creditSearch = (personid) => {
     return new Promise((resolve, reject) => {
@@ -85,11 +88,11 @@ var creditSearch = (personid) => {
 
 
 /**
- * This function reads the results of the search to the console log
+ * Reads the results of the search to the console log
  */
 var readResults = (results) => {
     /**
-     * @param {array} results - this is the list of search results
+     * @param {Object[]} results - this is the list of search results
      */
     for (var i = 0; i < results.length; i++) {
         console.log(`Title: ${results[i].title}`);
@@ -98,12 +101,12 @@ var readResults = (results) => {
 }
 
 /**
- * This function creates the on-screen list of movies, artwork and desciptions from the search
+ * Creates the on-screen list of movies, artwork and desciptions from the search
  */
 var parseResults = (results) => {
     /**
-     * @param {array} results - this is the list of search results
-     * @return {string} - this is the styling and divs of the search page
+     * @param {Object[]} results - this is the list of search results
+     * @return {String} this is the styling and divs of the search page
      */
     var parsed = "";
     for (var i = 0; i < results.length; i++) {
@@ -122,6 +125,11 @@ var parseResults = (results) => {
                     <input id= "favPush" name="favPush" type="hidden" value="yes" />
                     <input id="Favorite" class="btn btn-danger fButton" action="/favorites" type="submit" value="Favorite" />
                 </form>
+                <form action="/write_review" enctype="application/json" method="get">
+                    <input id="revIndex" name="revIndex" type="hidden" value=${i} />
+                    <input id= "revPush" name="revPush" type="hidden" value="yes" />
+                    <input id="WriteReview" class="btn btn-danger wButton" action="/write_review" type="submit" value="Write Review" />
+                </form>
             </div>
         </div>`;
     }
@@ -129,12 +137,12 @@ var parseResults = (results) => {
 }
 
 /**
- * This function creates the on-screen list of movies, artwork and desciptions for the favorites page
+ * Creates the on-screen list of movies, artwork and desciptions for the favorites page
  */
 var generateFavorites = (favorites) => {
     /**
-     * @param {array} favorites - this is the list of favorites saved by the user
-     * @return {string} - this is the styling and divs of the favorite page, or a message if no favorites have been saved 
+     * @param {Object[]} favorites - this is the list of favorites saved by the user
+     * @return {String} this is the styling and divs of the favorite page, or a message if no favorites have been saved 
      */
     var generated = "";
     if (favorites.length < 1) {
@@ -163,12 +171,43 @@ var generateFavorites = (favorites) => {
 }
 
 /**
- * This function creates the on-screen list of celebrities
+ * Creates the on-screen list of movies, ratings and reviews for the user review page
+ */
+var generateReviews = (reviews) => {
+    /**
+     * @param {Object[]} reviews - this is the list of reviews saved by the user
+     * @return {String} this is the styling and divs of the review page, or a message if no reviews have been saved 
+     */
+    var generated = "";
+    if (reviews.length < 1) {
+        return "<h2>No reviews have been saved!</h2>";
+    }
+    for (var i = 0; i < reviews.length; i++) {
+        generated += `
+        <div class="bg-light mDiv col-lg-3 col-md-4 col-xs-12">
+            <img src='http://image.tmdb.org/t/p/w92/${reviews[i].poster_path}' class="mb-3 mPoster img-thumbnail rounded float-left"/>
+            <div class="p-3 text-dark mText">
+                <strong>Title</strong>: ${reviews[i].title}<br>
+                <strong>Rating</strong>: ${reviews[i].rating}<br>
+                <strong>Review</strong>: ${reviews[i].review}<br>
+                <form action="/user_review" enctype="application/json" method="post">
+                    <input id= "revIndex" name="revIndex" type="hidden" value=${i} />
+                    <input id= "revPush" name="revPush" type="hidden" value="no" />
+                    <input id="Delete" class="btn btn-danger fButton" type="submit" value="Delete" />
+                </form>
+            </div>
+        </div>`;
+    }
+    return generated.replace(/\s\s+/g, ' ');
+}
+
+/**
+ * Creates the on-screen list of celebrities
  */
 var generatePeople = (results) => {
     /**
-     * @param {array} results - this is the list of celebrities searched by user
-     * @return {string} - this is the styling and divs of the search page
+     * @param {Object[]} results - this is the list of celebrities searched by user
+     * @return {String} this is the styling and divs of the search page
      */
     var parsed = "";
 
@@ -194,12 +233,12 @@ var generatePeople = (results) => {
 }
 
 /**
- * This function sorts the release date of the movies in descending order
+ * Sorts the release date of the movies in descending order
  */
 var sortReleaseDescending = (results) => {
     /**
-     * @param {array} results - this is the list of results searched by user
-     * @return {string} - this is the sorted list of the results.
+     * @param {Object[]} results - this is the list of results searched by user
+     * @return {String} this is the sorted list of the results.
      */
     var max = results.length;
     var sorted = [];
@@ -216,12 +255,12 @@ var sortReleaseDescending = (results) => {
 }
 
 /**
- * This function sorts the release date of the movies in ascending order
+ * Sorts the release date of the movies in ascending order
  */
 var sortReleaseAscending = (results) => {
     /**
-     * @param {array} results - this is the list of results searched by user
-     * @return {string} - this is the sorted list of the results.
+     * @param {Object[]} results - this is the list of results searched by user
+     * @return {String} this is the sorted list of the results.
      */
     var max = results.length;
     var sorted = [];
@@ -238,12 +277,12 @@ var sortReleaseAscending = (results) => {
 }
 
 /**
- * This function sorts the movie title in descending order
+ * Sorts the movie title in descending order
  */
 var sortTitleDescending = (results) => {
     /**
-     * @param {array} results - this is the list of results searched by user
-     * @return {string} - this is the sorted list of the results.
+     * @param {Object[]} results - this is the list of results searched by user
+     * @return {String} this is the sorted list of the results.
      */
     var max = results.length;
     var sorted = [];
@@ -261,12 +300,12 @@ var sortTitleDescending = (results) => {
 }
 
 /**
- * This function sorts the movie title in ascending order
+ * Sorts the movie title in ascending order
  */
 var sortTitleAscending = (results) => {
     /**
-     * @param {array} results - this is the list of results searched by user
-     * @return {string} - this is the sorted list of the results.
+     * @param {Object[]} results - this is the list of results searched by user
+     * @return {String} this is the sorted list of the results.
      */
     var max = results.length;
     var sorted = [];
@@ -283,16 +322,48 @@ var sortTitleAscending = (results) => {
     return sorted;
 }
 
+/**
+ * Creates a list of top rated movies for top_movies.hbs
+ */
+var generateRankings = (movies) => {
+    /**
+     * @param {Object[]} movies - sorted list of movies with ratings
+     * @return {String} this is the styling and divs of the ranked movies
+     */
+    var generated = "";
+    if (movies.length < 1) {
+        return "<h2>No ratings have been recorded!</h2>";
+    }
+    for (var i = 0; i < movies.length; i++) {
+        var overview = movies[i].overview;
+        if (overview.length > 600)
+            overview = overview.substring(0, 600) + "..";
+        generated += `
+        <div class="bg-light mDiv col-lg-3 col-md-4 col-xs-12">
+            <img src='http://image.tmdb.org/t/p/w92/${movies[i].poster_path}' class="mb-3 mPoster img-thumbnail rounded float-left"/>
+            <div class="p-3 text-dark mText">
+                <strong>Rank</strong>: ${i+1}/10<br>
+                <strong>Title</strong>: ${movies[i].title}<br>
+                <strong>Average Rating</strong>: ${movies[i].rating_avg}<br>
+                <strong>Overview</strong>: ${overview}<br>
+                <strong>Release Date</strong>: ${movies[i].release_date}<br>
+            </div>
+        </div>`;
+    }
+    return generated.replace(/\s\s+/g, ' ');
+}
+
 
 module.exports = {
     search,
     peopleSearch,
     creditSearch,
     readResults,
-    readResults,
     parseResults,
     generateFavorites,
+    generateReviews,
     generatePeople,
+    generateRankings,
     sortReleaseDescending,
     sortReleaseAscending,
     sortTitleDescending,

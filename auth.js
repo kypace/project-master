@@ -1,12 +1,25 @@
 const bcrypt = require('bcrypt');
 const fs = require('fs');
 
+/**
+ * @type {int} - salt (random input data) for bCrypt hashing
+ */
 const saltRounds = 10;
 
-const filename = 'auth.json'; // holds all user data
+/**
+ * @type {String} - filename of user data
+ */
+const filename = 'auth.json';
 
-var users; // users loaded from file
-var currentName = ''; // current user's username
+/**
+ * @type {Object[]} - JSON user objects loaded from file
+ */
+var users;
+
+/**
+ * @type {String} - current username
+ */
+var currentName = '';
 
 
 /**
@@ -66,7 +79,8 @@ var store = (registerName, registerPw) => {
     var user = {
         username: registerName,
         password: hash,
-        favorites: []
+        favorites: [],
+        reviews: []
     };
     users.push(user);
     fs.writeFileSync(filename, JSON.stringify(users));
@@ -122,6 +136,35 @@ var setFavorites = (favorites) => {
     for (var i = 0; i < users.length; i++) {
         if (currentName === users[i].username)
             users[i].favorites = favorites;
+    }
+    fs.writeFileSync(filename, JSON.stringify(users));
+}
+
+/**
+ * this returns a list of the user's reviews
+ */
+var getReviews = () => {
+    /**
+     * @return {object} the current user's review list
+     */
+    for (var i = 0; i < users.length; i++) {
+        if (currentName === users[i].username)
+            return users[i].reviews;
+    }
+}
+
+
+/**
+ * select and set the current user's reviews
+ */
+var setReviews = (reviews) => {
+    /**
+     * @param {string} reviews - list of reviews to add
+     * @return {function} the function that writes(adds) the reviews to user json file.
+     */
+    for (var i = 0; i < users.length; i++) {
+        if (currentName === users[i].username)
+            users[i].reviews = reviews;
     }
     fs.writeFileSync(filename, JSON.stringify(users));
 }
@@ -184,6 +227,45 @@ var getCurrentName = () => {
     return currentName;
 }
 
+/**
+ * generates list of highest rated movies
+ */
+var sortTopMovies = () => {
+    /**
+     * @return {Object[]} movies - array of movies with rating averages
+     */
+    var movies = [];
+    for (var i = 0; i < users.length; i++) { // iterate through users
+        for (var j = 0; j < users[i].reviews.length; j++) { // iterate through user reviews
+            var matchIndex = 0;
+            var matched = false;
+            for (var k = 0; k < movies.length; k++) { // iterate through logged movies
+                if (users[i].reviews[j].id == movies[k].id) {
+                    matchIndex = k;
+                    matched = true;
+                }
+            }
+            if (matched) {
+                movies[matchIndex].rating_sum += users[i].reviews[j].rating;
+                movies[matchIndex].rating_count++;
+            }
+            else {
+                var newMovie = JSON.parse(JSON.stringify(users[i].reviews[j]));
+                movies.push(newMovie);
+                movies[movies.length - 1].rating_sum = Number(movies[movies.length - 1].rating);
+                movies[movies.length - 1].rating_count = 1;
+                delete movies[movies.length - 1].rating;
+                delete movies[movies.length - 1].review; 
+            }
+        }
+    }
+    for (var l = 0; l < movies.length; l++) {
+        movies[l].rating_avg = movies[l].rating_sum / movies[l].rating_count;
+    }
+    movies.sort(function(a, b){return b.rating_avg - a.rating_avg})
+    return movies;
+}
+
 
 /**
  * exports functions
@@ -196,8 +278,11 @@ module.exports = {
     check,
     getFavorites,
     setFavorites,
+    getReviews,
+    setReviews,
     logoff,
     isLogged,
     getCurrentName,
-    changeInfo
+    changeInfo,
+    sortTopMovies
 };

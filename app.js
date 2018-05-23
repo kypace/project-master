@@ -6,6 +6,9 @@ const tastedive = require('./tastedive');
 const themoviedb = require('./themoviedb')
 const auth = require('./auth')
 
+/**
+ * @type {Object} - Express application
+ */
 var app = express();
 
 hbs.registerPartials(__dirname + '/views/partials');
@@ -17,41 +20,26 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(express.urlencoded());
 
-var currentSearch; // tracks current search results, used to add favorites
-var searchChoice; // tracks current search option
-var sortChoice; // tracks current sort option for actor and director search
-var userFavorites = []; // tracks current user favorites
-
 /**
- * Used to check if the user has logged in when accessing certain URLs.
+ * @type {Object[]} - tracks current search results, used to add favorites
  */
-var checkLogin = (response) => {
-    /**
-     * @param {Object} response - Express HTTP response object
-     * @return {bool} - bool determining if user is logged in or not
-     */
-    if (!auth.isLogged()) {
-        response.render('log.hbs', {
-            signupMsg: '',
-            loginMsg: ''
-        });
-        return false;
-    } else
-        return true;
-}
-
-
-app.get('/user_review', (request, response) => {
-    /**
-     * @param {Object} request - Express HTTP request object
-     * @param {Object} response - Express HTTP response object
-     */
-    if (checkLogin(response)) {
-        response.render('user_review.hbs', {
-            parsed: ''
-        });
-    }
-});
+var currentSearch;
+/**
+ * @type {Object} - tracks current search option
+ */
+var searchChoice;
+/**
+ * @type {String} - tracks current sort option for actor and director search
+ */
+var sortChoice;
+/**
+ * @type {Object[]} - tracks current user favorites
+ */
+var userFavorites = [];
+/**
+ * @type {Object[]} - tracks current user reviews
+ */
+var userReviews = [];
 
 /**
  * Initial landing page, displays login
@@ -80,7 +68,7 @@ app.post('/signup', (request, response) => {
         if (request.body.registerName.length <= 0 || request.body.registerPw.length <= 0)
             msg = '<h2 class="fail">Username or password missing</h2>'
         else if (!auth.checkAvailable(request.body.registerName))
-            msg = '<h2 class="fail">Username unavailable</h2>';
+            msg = '<h2 class="fail">Username already taken</h2>';
         else if (!auth.checkSamePass(request.body.registerPw, request.body.confirmPw))
             msg = '<h2 class="fail">Passwords do not match</h2>'
         else {
@@ -94,6 +82,7 @@ app.post('/signup', (request, response) => {
         signupMsg: msg,
         loginMsg: ''
     });
+
 });
 
 /**
@@ -116,6 +105,7 @@ app.post('/login', (request, response) => {
         });
     } else {
         userFavorites = auth.getFavorites();
+        userReviews = auth.getReviews();
         response.redirect('/home');
     }
 });
@@ -128,8 +118,14 @@ app.get('/home', (request, response) => {
      * @param {Object} request - Express HTTP request object
      * @param {Object} response - Express HTTP response object
      */
-    if (checkLogin(response))
+    if (auth.isLogged())
         response.render('home.hbs');
+    else {
+        response.render('log.hbs', {
+            signupMsg: '',
+            loginMsg: ''
+        });
+    }
 });
 
 /**
@@ -140,9 +136,14 @@ app.get('/search', (request, response) => {
      * @param {Object} request - Express HTTP request object
      * @param {Object} response - Express HTTP response object
      */
-    if (checkLogin(response)) {
+    if (auth.isLogged()) {
         response.render('search.hbs', {
             parsed: ''
+        });
+    } else {
+        response.render('log.hbs', {
+            signupMsg: '',
+            loginMsg: ''
         });
     }
 });
@@ -284,10 +285,15 @@ app.get('/favorites', (request, response) => {
      * @param {Object} request - Express HTTP request object
      * @param {Object} response - Express HTTP response object
      */
-    if (checkLogin(response)) {
+    if (auth.isLogged()) {
         userFavorites = [...new Set(userFavorites.map(v => JSON.stringify(v)))].map(v => JSON.parse(v));
         response.render('favorites.hbs', {
             favorites: themoviedb.generateFavorites(userFavorites)
+        });
+    } else {
+        response.render('log.hbs', {
+            signupMsg: '',
+            loginMsg: ''
         });
     }
 });
@@ -306,12 +312,11 @@ app.post('/favorites', (request, response) => {
          */
         userFavorites.push(currentSearch[request.body.favIndex]);
         userFavorites = [...new Set(userFavorites.map(v => JSON.stringify(v)))].map(v => JSON.parse(v));
-        auth.setFavorites(userFavorites);
     } else {
         userFavorites.splice(request.body.favIndex, 1);
         userFavorites = [...new Set(userFavorites.map(v => JSON.stringify(v)))].map(v => JSON.parse(v));
-        auth.setFavorites(userFavorites);
     }
+    auth.setFavorites(userFavorites);
     response.render('favorites.hbs', {
         favorites: themoviedb.generateFavorites(userFavorites)
     });
@@ -325,7 +330,7 @@ app.get('/recommendations', (request, response) => {
      * @param {string} '/recommendations' - a route
      * @param {function(request: Object, response: Object)} - callback for user's requests in /recommendations
      */
-    if (checkLogin(response)) {
+    if (auth.isLogged()) {
         var recString = "";
         if (userFavorites.length > 0) {
             for (var i = 0; i < userFavorites.length; i++) {
@@ -347,6 +352,89 @@ app.get('/recommendations', (request, response) => {
                 recommendations: "<h2>No favorites found! Favorite at least one movie to generate recommendations.</h2>"
             });
         }
+    } else {
+        response.render('log.hbs', {
+            signupMsg: '',
+            loginMsg: ''
+        });
+    }
+});
+
+/**
+ * user created reviews and ratings of movies
+ */
+app.get('/user_review', (request, response) => {
+    /**
+     * @param {Object} request - Express HTTP request object
+     * @param {Object} response - Express HTTP response object
+     */
+    if (auth.isLogged()) {
+        userReviews = auth.getReviews();
+        response.render('user_review.hbs', {
+            reviews: themoviedb.generateReviews(userReviews)
+        });
+    } else {
+        response.render('log.hbs', {
+            signupMsg: '',
+            loginMsg: ''
+        });
+    }
+});
+
+/**
+ * user created reviews and ratings of movies
+ */
+app.post('/user_review', (request, response) => {
+    /**
+     * @param {Object} request - Express HTTP request object
+     * @param {Object} response - Express HTTP response object
+     */
+    if (request.body.revPush == 'yes') {
+        var movie = currentSearch[request.body.revIndex];
+        movie.rating = request.body.movieRating;
+        movie.review = request.body.movieReview;
+        userReviews.push(movie);
+    } else {
+        userReviews.splice(request.body.revIndex, 1);
+    }
+    auth.setReviews(userReviews)
+    response.render('user_review.hbs', {
+        reviews: themoviedb.generateReviews(userReviews)
+    });
+});
+
+/**
+ * page to write user review and rating
+ */
+app.get('/write_review', (request, response) => {
+    /**
+     * @param {Object} request - Express HTTP request object
+     * @param {Object} response - Express HTTP response object
+     */
+    response.render('write_review.hbs', {
+        movietitle: currentSearch[request.query.revIndex].title,
+        movieposter: currentSearch[request.query.revIndex].poster_path,
+        revIndex: request.query.revIndex
+    });
+});
+
+/**
+ * list of top rated movies based off of ratings
+ */
+app.get('/top_movies', (request, response) => {
+    /**
+     * @param {Object} request - Express HTTP request object
+     * @param {Object} response - Express HTTP response object
+     */
+    if (auth.isLogged()) {
+        response.render('top_movies.hbs', {
+            top_movies: themoviedb.generateRankings(auth.sortTopMovies())
+        });
+    } else {
+        response.render('log.hbs', {
+            signupMsg: '',
+            loginMsg: ''
+        });
     }
 });
 
@@ -358,9 +446,14 @@ app.get('/settings', (request, response) => {
      * @param {string} '/settings' - a route
      * @param {function(request: Object, response: Object)} - callback for user's requests in /settings
      */
-    if (checkLogin(response)) {
+    if (auth.isLogged()) {
         response.render('settings.hbs', {
             settingsMsg: ''
+        });
+    } else {
+        response.render('log.hbs', {
+            signupMsg: '',
+            loginMsg: ''
         });
     }
 });

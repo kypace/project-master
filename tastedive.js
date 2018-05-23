@@ -1,5 +1,8 @@
 const request = require('request');
 
+/**
+ * @type {String} - Tastedive API key
+ */
 var key = '302969-StudentP-ITG1R8RP';
 
 
@@ -8,14 +11,14 @@ var key = '302969-StudentP-ITG1R8RP';
  */
 var getRecommendations = (seed) => {
     /**
-    * @param {object} seed 
-    * @param {object} resolve
-    * @param {object} reject
-    * @param {string} error
-    * @param {string} response
-    * @param {string} body
-    * @return {object} Promise - returns similar results for recommendations 
-    */
+     * @param {Object} seed 
+     * @param {Object} resolve
+     * @param {Object} reject
+     * @param {String} error
+     * @param {String} response
+     * @param {String} body
+     * @return {Object} Promise - returns similar results for recommendations 
+     */
     return new Promise((resolve, reject) => {
         request({
             url: 'https://tastedive.com/api/similar?type=movies&info=1&k=' + key + '&q=' + encodeURIComponent(seed),
@@ -35,7 +38,7 @@ var getRecommendations = (seed) => {
 }
 
 /**
- * This was only used for testing purposes
+ * outputs all recommendations, used for initial testing
  */
 var readRecommendations = (reclist) => {
     for (var i = 0; i < reclist.length; i++) {
@@ -49,9 +52,9 @@ var readRecommendations = (reclist) => {
  */
 var parseRecommendations = (reclist) => {
     /**
-    * @param {object} reclist - the recommended list 
-    * @return {object} generated - arrays of movies shown in html with teasers
-    */
+     * @param {Object} reclist - the recommended list 
+     * @return {Object} generated - arrays of movies shown in html with teasers
+     */
 	var generated = "";
 	for (var i = 0; i < reclist.length; i++) {
         var teaser = reclist[i].wTeaser;
